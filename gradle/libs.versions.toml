@@ -21,6 +21,7 @@ androidx-appcompat = "1.6.1"
 material = "1.8.0"
 androidx-constraintlayout = "2.1.4"
 androidx-recyclerview = "1.2.1"
+androidx-fragment = "1.5.5"
 modernandroidpreferences = "2.3.2"
 coil = "2.2.2"
 
@@ -73,6 +74,7 @@ androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "a
 material = { module = "com.google.android.material:material", version.ref = "material" }
 androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "androidx-constraintlayout" }
 androidx-recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "androidx-recyclerview" }
+androidx-fragment = { module = "androidx.fragment:fragment-ktx", version.ref = "androidx-fragment" }
 modernandroidpreferences = { module = "de.maxr1998:modernandroidpreferences", version.ref = "modernandroidpreferences" }
 coil = { group = "io.coil-kt", name = "coil", version.ref = "coil" }
 
