@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Digital Health</string>
+    <string name="edit_text_hint">Input text</string>
+    <string name="button_finish">Finish</string>
 </resources>
