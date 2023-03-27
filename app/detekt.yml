@@ -1,0 +1,132 @@
+build:
+  maxIssues: 0
+
+complexity:
+  ComplexCondition:
+    active: false #TODO: Should be enabled again
+    threshold: 5
+  LargeClass:
+    threshold: 800
+  LongMethod:
+    active: false # TODO: Should be enabled again
+    threshold: 100
+  LongParameterList:
+    active: false # TODO: Should be enabled again
+    constructorThreshold: 20
+  NestedBlockDepth:
+    threshold: 6
+  TooManyFunctions:
+    active: false # TODO: Should be enabled again
+    thresholdInFiles: 15
+    thresholdInClasses: 15
+    thresholdInInterfaces: 15
+    thresholdInObjects: 15
+    thresholdInEnums: 15
+    ignoreDeprecated: true
+    excludes: &extensions
+      - "**/bitpit/launcher/util/extension/**"
+  CyclomaticComplexMethod:
+    active: false # TODO: Should be enabled again
+
+coroutines:
+  InjectDispatcher:
+    active: false
+
+exceptions:
+  SwallowedException:
+    active: false
+  TooGenericExceptionCaught:
+    active: false
+
+formatting:
+  AnnotationOnSeparateLine:
+    active: true
+  ArgumentListWrapping:
+    active: true
+  EnumEntryNameCase:
+    active: true
+    autoCorrect: false
+  Filename:
+    active: false # active in naming rules
+  FinalNewline:
+    insertFinalNewLine: false
+  Indentation:
+    active: false
+  MaximumLineLength:
+    active: false # active in style rules
+  MultiLineIfElse:
+    autoCorrect: false
+  NoEmptyFirstLineInMethodBlock:
+    active: true
+  PackageName:
+    active: false # active in naming rules
+  TrailingCommaOnDeclarationSite:
+    active: true
+  TrailingCommaOnCallSite:
+    active: true
+
+naming:
+  ClassNaming:
+    excludes: [ '**/_*_packageDoc.kt' ]
+  PackageNaming:
+    # Package names must be lowercase letters but may include underscores
+    packagePattern: '[a-z]+(\.[a-z]+(_[a-z]+)*)*'
+
+style:
+  AlsoCouldBeApply:
+    active: true
+  CascadingCallWrapping:
+    active: true
+  DataClassContainsFunctions:
+    active: false
+  DataClassShouldBeImmutable:
+    active: true
+  EqualsOnSignatureLine:
+    active: true
+  ForbiddenComment:
+    # Allow TODOs
+    values: [ 'FIXME:', 'STOPSHIP:' ]
+  LoopWithTooManyJumpStatements:
+    maxJumpCount: 6
+  MagicNumber:
+    active: false # most "magic" numbers are apparent from the context and thus fine
+  MandatoryBracesIfStatements:
+    active: true
+  MandatoryBracesLoops:
+    active: true
+  MaxLineLength:
+    maxLineLength: 120
+    excludeCommentStatements: true
+    excludeImportStatements: true
+  MultilineLambdaItParameter:
+    active: true
+  ModifierOrder:
+    active: false # active in formatting rules
+  NewLineAtEndOfFile:
+    active: false # active in formatting rules
+  NoTabs:
+    active: true
+  NullableBooleanCheck:
+    active: false
+  PreferToOverPairSyntax:
+    active: false
+  ReturnCount:
+    active: false
+    max: 6
+  SpacingBetweenPackageAndImports:
+    active: true
+  ThrowsCount:
+    active: false
+  TrailingWhitespace:
+    active: true
+  UnderscoresInNumericLiterals:
+    active: true
+    acceptableLength: 5
+  UnnecessaryAbstractClass:
+    active: true
+  UnnecessaryBackticks:
+    active: true
+  UnnecessaryLet:
+    active: true
+  UnnecessaryParentheses:
+    active: false

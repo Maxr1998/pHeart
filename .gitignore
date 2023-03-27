@@ -1,0 +1,30 @@
+*build/
+.externalNativeBuild/
+captures/
+app/schemas/
+
+# Local configuration file (sdk path, etc)
+local.properties
+
+# Eclipse project files
+.classpath
+.project
+project.properties
+lint.xml
+
+# Intellij project files
+*.iml
+*.ipr
+*.iws
+.idea/*
+!.idea/detekt.xml
+!.idea/encodings.xml
+!.idea/git_toolbox_prj.xml
+!.idea/jsonSchemas.xml
+
+# Gradle
+.gradle/
+
+# System files
+.DS_Store
+*.*~
