@@ -19,7 +19,7 @@ detekt {
 }
 
 android {
-    namespace = "de.unia.digitalhealth"
+    namespace = "edu.uaux.pheart"
     compileSdk = 33
     defaultConfig {
         minSdk = 28

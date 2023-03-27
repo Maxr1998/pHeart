@@ -1,4 +1,4 @@
-package de.unia.digitalhealth
+package edu.uaux.pheart
 
 import android.content.Intent
 import android.os.Bundle

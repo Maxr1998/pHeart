@@ -1,4 +1,4 @@
-package de.unia.digitalhealth
+package edu.uaux.pheart
 
 import android.os.Bundle
 import android.widget.TextView

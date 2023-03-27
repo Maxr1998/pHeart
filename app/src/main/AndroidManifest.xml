@@ -13,7 +13,7 @@
         tools:ignore="UnusedAttribute">
 
         <activity
-            android:name=".MainActivity"
+            android:name="edu.uaux.pheart.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,6 +21,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".DisplayActivity" />
+        <activity android:name="edu.uaux.pheart.DisplayActivity" />
     </application>
 </manifest>
