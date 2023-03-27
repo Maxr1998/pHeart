@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">pHeart</string>
-    <string name="edit_text_hint">Input text</string>
-    <string name="button_finish">Finish</string>
+
+    <string name="screen_name_home">Home</string>
+    <string name="screen_name_measurements">Measurements</string>
+    <string name="screen_name_add_measurement">Add measurement</string>
+    <string name="screen_name_profile">Profile</string>
+    <string name="screen_name_preferences">Preferences</string>
 </resources>

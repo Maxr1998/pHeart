@@ -1,0 +1,22 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/screen_home"
+        android:icon="@drawable/ic_heart_24"
+        android:title="@string/screen_name_home" />
+    <item
+        android:id="@+id/screen_measurements"
+        android:icon="@drawable/ic_list_24"
+        android:title="@string/screen_name_measurements" />
+    <item
+        android:id="@+id/screen_add_measurement"
+        android:icon="@drawable/ic_add_circle_24"
+        android:title="@string/screen_name_add_measurement" />
+    <item
+        android:id="@+id/screen_profile"
+        android:icon="@drawable/ic_person_24"
+        android:title="@string/screen_name_profile" />
+    <item
+        android:id="@+id/screen_preferences"
+        android:icon="@drawable/ic_preferences_24"
+        android:title="@string/screen_name_preferences" />
+</menu>
