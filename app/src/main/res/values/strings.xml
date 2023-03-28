@@ -7,4 +7,8 @@
     <string name="screen_name_add_measurement">Add measurement</string>
     <string name="screen_name_profile">Profile</string>
     <string name="screen_name_preferences">Preferences</string>
+
+    <string name="title_new_measurement">New measurement</string>
+    <string name="button_redo_measurement">Redo</string>
+    <string name="button_save_measurement">Save</string>
 </resources>

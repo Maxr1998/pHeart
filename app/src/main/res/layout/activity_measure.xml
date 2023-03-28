@@ -5,6 +5,15 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/screen_title"
+        style="@style/TextAppearance.Material3.ActionBar.Title"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:padding="16dp"
+        android:text="@string/title_new_measurement"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
         android:id="@+id/status_text"
         style="@style/TextAppearance.Material3.BodyLarge"
         android:layout_width="wrap_content"
@@ -12,16 +21,46 @@
         app:layout_constraintBottom_toTopOf="@id/camera_preview"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/screen_title" />
 
     <androidx.camera.view.PreviewView
         android:id="@+id/camera_preview"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="3:4"
+        android:layout_marginHorizontal="@dimen/screen_padding_horizontal"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@id/button_barrier"
+        app:layout_constraintDimensionRatio="4:3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_max="340dp" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/button_barrier"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:barrierDirection="top"
+        app:constraint_referenced_ids="button_redo_measurement,button_save_measurement" />
+
+    <Button
+        android:id="@+id/button_redo_measurement"
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/screen_padding_horizontal"
+        android:layout_marginBottom="@dimen/screen_padding_vertical"
+        android:text="@string/button_redo_measurement"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button_save_measurement"
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/screen_padding_horizontal"
+        android:layout_marginBottom="@dimen/screen_padding_vertical"
+        android:text="@string/button_save_measurement"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
