@@ -1,14 +1,16 @@
 allprojects {
     repositories {
-        mavenCentral()
         google()
+        mavenCentral()
     }
 }
 
-tasks.wrapper {
-    distributionType = Wrapper.DistributionType.ALL
-}
+tasks {
+    wrapper {
+        distributionType = Wrapper.DistributionType.ALL
+    }
 
-tasks.create<Delete>("clean") {
-    delete(rootProject.buildDir)
+    create<Delete>("clean") {
+        delete(rootProject.buildDir)
+    }
 }

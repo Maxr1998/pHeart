@@ -1,6 +1,6 @@
 [versions]
 # Plugins
-android-plugin = "7.4.1"
+android-plugin = "7.4.2"
 kotlin = "1.8.10"
 ksp = "1.8.10-1.0.9"
 proguard-dictionaries = "1.0.8"
