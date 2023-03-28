@@ -2,9 +2,11 @@ package edu.uaux.pheart
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import edu.uaux.pheart.preferences.PreferencesFragment
+import org.koin.android.ext.android.get
 
 class MainActivity : AppCompatActivity() {
 
@@ -31,13 +33,17 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.screen_preferences -> {
-                    supportFragmentManager.commit {
-                        replace(R.id.fragment_container, PreferencesFragment())
-                    }
+                    replaceFragment<PreferencesFragment>()
                     true
                 }
                 else -> false
             }
+        }
+    }
+
+    private inline fun <reified T : Fragment> replaceFragment() {
+        supportFragmentManager.commit {
+            replace(R.id.fragment_container, get<T>())
         }
     }
 }
