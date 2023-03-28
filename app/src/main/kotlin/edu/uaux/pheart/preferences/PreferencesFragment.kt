@@ -20,6 +20,7 @@ class PreferencesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         recyclerView = view.findViewById(R.id.recycler_view)
         recyclerView.adapter = preferencesViewModel.preferencesAdapter
     }
