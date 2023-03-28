@@ -1,11 +1,13 @@
 package edu.uaux.pheart
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import edu.uaux.pheart.all_results.AllResultsFragment
+import edu.uaux.pheart.measure.MeasureActivity
 import edu.uaux.pheart.preferences.PreferencesFragment
 import edu.uaux.pheart.profile.ProfileFragment
 import org.koin.android.ext.android.get
@@ -30,6 +32,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.screen_add_measurement -> {
+                    startActivity(Intent(this, MeasureActivity::class.java))
                     true
                 }
                 R.id.screen_profile -> {

@@ -102,6 +102,13 @@ dependencies {
     implementation(libs.modernandroidpreferences)
     implementation(libs.coil)
 
+    // Camera & face detection
+    implementation(libs.androidx.camera.camera2)
+    implementation(libs.androidx.camera.lifecycle)
+    implementation(libs.androidx.camera.view)
+    implementation(libs.androidx.camera.mlkit)
+    implementation(libs.playservices.mlkit)
+
     // Lifecycle & ViewModel
     implementation(libs.bundles.androidx.lifecycle)
 

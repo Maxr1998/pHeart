@@ -25,6 +25,11 @@ androidx-fragment = "1.5.5"
 modernandroidpreferences = "2.3.2"
 coil = "2.2.2"
 
+# Camera & face detection
+androidx-camera = "1.2.2"
+androidx-camera-mlkit = "1.2.0-beta02"
+playservices-mlkit = "17.1.0"
+
 # Lifecycle Extensions
 androidx-lifecycle = "2.5.1"
 
@@ -77,6 +82,13 @@ androidx-recyclerview = { module = "androidx.recyclerview:recyclerview", version
 androidx-fragment = { module = "androidx.fragment:fragment-ktx", version.ref = "androidx-fragment" }
 modernandroidpreferences = { module = "de.maxr1998:modernandroidpreferences", version.ref = "modernandroidpreferences" }
 coil = { group = "io.coil-kt", name = "coil", version.ref = "coil" }
+
+# Camera & face detection
+androidx-camera-camera2 = { group = "androidx.camera", name = "camera-camera2", version.ref = "androidx-camera" }
+androidx-camera-lifecycle = { group = "androidx.camera", name = "camera-lifecycle", version.ref = "androidx-camera" }
+androidx-camera-view = { group = "androidx.camera", name = "camera-view", version.ref = "androidx-camera" }
+androidx-camera-mlkit = { group = "androidx.camera", name = "camera-mlkit-vision", version.ref = "androidx-camera-mlkit" }
+playservices-mlkit = { group = "com.google.android.gms", name = "play-services-mlkit-face-detection", version.ref = "playservices-mlkit" }
 
 # Lifecycle Extensions
 androidx-lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "androidx-lifecycle" }

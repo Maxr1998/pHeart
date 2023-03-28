@@ -4,6 +4,9 @@
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera" />
 
     <application
         android:name=".PHeartApplication"
@@ -22,6 +25,11 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".measure.MeasureActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+
         <provider
             android:name="androidx.startup.InitializationProvider"
             android:authorities="${applicationId}.androidx-startup"
@@ -34,5 +42,9 @@
                 android:name="edu.uaux.pheart.startup.KoinInitializer"
                 android:value="androidx.startup" />
         </provider>
+
+        <meta-data
+            android:name="com.google.mlkit.vision.DEPENDENCIES"
+            android:value="face" />
     </application>
 </manifest>
