@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import edu.uaux.pheart.all_results.AllResultsFragment
 import edu.uaux.pheart.preferences.PreferencesFragment
 import edu.uaux.pheart.profile.ProfileFragment
 import org.koin.android.ext.android.get
@@ -25,6 +26,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.screen_measurements -> {
+                    replaceFragment<AllResultsFragment>()
                     true
                 }
                 R.id.screen_add_measurement -> {
