@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import edu.uaux.pheart.preferences.PreferencesFragment
+import edu.uaux.pheart.profile.ProfileFragment
 import org.koin.android.ext.android.get
 
 class MainActivity : AppCompatActivity() {
@@ -30,6 +31,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.screen_profile -> {
+                    replaceFragment<ProfileFragment>()
                     true
                 }
                 R.id.screen_preferences -> {
