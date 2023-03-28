@@ -28,6 +28,9 @@
             android:exported="false"
             tools:node="merge">
             <meta-data
+                android:name="edu.uaux.pheart.startup.DebuggingInitializer"
+                android:value="androidx.startup" />
+            <meta-data
                 android:name="edu.uaux.pheart.startup.KoinInitializer"
                 android:value="androidx.startup" />
         </provider>
