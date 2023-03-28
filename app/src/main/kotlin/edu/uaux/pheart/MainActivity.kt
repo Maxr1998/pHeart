@@ -10,6 +10,7 @@ import edu.uaux.pheart.all_results.AllResultsFragment
 import edu.uaux.pheart.measure.MeasureActivity
 import edu.uaux.pheart.preferences.PreferencesFragment
 import edu.uaux.pheart.profile.ProfileFragment
+import edu.uaux.pheart.statistics.StatisticsFragment
 import org.koin.android.ext.android.get
 
 class MainActivity : AppCompatActivity() {
@@ -25,6 +26,7 @@ class MainActivity : AppCompatActivity() {
         navigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.screen_home -> {
+                    replaceFragment<StatisticsFragment>()
                     true
                 }
                 R.id.screen_measurements -> {
