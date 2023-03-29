@@ -14,6 +14,12 @@ import java.util.concurrent.Executor
 
 class MeasureActivity : AppCompatActivity(), FaceDetectionHelper.Callback {
 
+    companion object {
+        const val EXTRA_MEASUREMENT_TYPE = "edu.uaux.pheart.measure.EXTRA_MEASUREMENT_TYPE"
+        const val EXTRA_ACTIVITY_LEVEL = "edu.uaux.pheart.measure.EXTRA_ACTIVITY_LEVEL"
+        const val EXTRA_MEASUREMENT_DURATION = "edu.uaux.pheart.measure.EXTRA_MEASUREMENT_DURATION"
+    }
+
     private val permissionHelper = CameraPermissionHelper(this) {
         startCamera()
     }

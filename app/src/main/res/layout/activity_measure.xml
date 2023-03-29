@@ -33,7 +33,7 @@
         app:layout_constraintDimensionRatio="4:3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintWidth_max="340dp" />
+        app:layout_constraintWidth_max="@dimen/max_view_width" />
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/button_barrier"

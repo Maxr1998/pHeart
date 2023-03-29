@@ -9,6 +9,17 @@
     <string name="screen_name_preferences">Preferences</string>
 
     <string name="title_new_measurement">New measurement</string>
+    <string name="button_measurement_type_face">face</string>
+    <string name="button_measurement_type_finger">finger</string>
+    <string name="measurement_type_description_face">Keep your face in frame until the measurement is complete.</string>
+    <string name="measurement_type_description_finger">Put your finger on your back camera lens and flashlight.\n(Use \'face\' if the camera and flashlight are too far apart.)</string>
+    <string name="activity_level_prompt">How did you spend the last hour?</string>
+    <string name="activity_level_relaxed">relax</string>
+    <string name="activity_level_seated">sit</string>
+    <string name="activity_level_light_exercise">light exercise</string>
+    <string name="activity_level_heavy_exercise">heavy exercise</string>
+    <string name="measurement_duration_prompt">How long do you want to measure?</string>
+    <string name="measurement_duration_prompt_subtitle">Longer measurements are more precise.</string>
     <string name="button_start_measurement">Start</string>
     <string name="button_redo_measurement">Redo</string>
     <string name="button_save_measurement">Save</string>
