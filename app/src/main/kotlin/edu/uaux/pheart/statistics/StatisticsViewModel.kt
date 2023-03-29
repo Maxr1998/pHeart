@@ -5,6 +5,9 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.highlight.Highlight
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import edu.uaux.pheart.database.AppDatabase
 import edu.uaux.pheart.database.Measurement
 import edu.uaux.pheart.database.MeasurementDao
@@ -20,11 +23,11 @@ class StatisticsViewModel(app: Application) : AndroidViewModel(app), KoinCompone
 
     private val measurementDao: MeasurementDao = get<AppDatabase>().measurementDao()
 
-    private val _selectedMeasurement: MutableLiveData<Measurement?> = MutableLiveData<Measurement?>(null)
+    private val _selectedMeasurement: MutableLiveData<AverageBpm?> = MutableLiveData<AverageBpm?>(null)
     private val _dailyMeasurements: MutableLiveData<List<Measurement>> = MutableLiveData(emptyList())
     private val _dayInstant: MutableLiveData<ZonedDateTime?> = MutableLiveData(null)
 
-    val selectedMeasurement: LiveData<Measurement?>
+    val selectedMeasurement: LiveData<AverageBpm?>
         get() = _selectedMeasurement
     val dailyMeasurements: LiveData<List<Measurement>>
         get() = _dailyMeasurements
@@ -43,7 +46,6 @@ class StatisticsViewModel(app: Application) : AndroidViewModel(app), KoinCompone
             }
             _dailyMeasurements.value = dailyMeasurements
             _dayInstant.value = zonedDateTime
-            _selectedMeasurement.value = dailyMeasurements.firstOrNull()
         }
     }
 
@@ -57,5 +59,25 @@ class StatisticsViewModel(app: Application) : AndroidViewModel(app), KoinCompone
         return Pair(start, end)
     }
 
+    val onChartValueSelectedListener = object : OnChartValueSelectedListener {
+        override fun onValueSelected(e: Entry?, h: Highlight?) {
+            if (e == null || e.data == null) {
+                onNothingSelected()
+                return
+            }
 
+            val averageBpm = e.data as AverageBpm
+            if (averageBpm.avgBpm <= 0) {
+                onNothingSelected()
+                return
+            }
+            _selectedMeasurement.value = e.data as AverageBpm
+        }
+
+        override fun onNothingSelected() {
+            _selectedMeasurement.value = null
+        }
+    }
+
+    data class AverageBpm(val timeOfDay: TimeOfDay, val avgBpm: Int)
 }

@@ -73,6 +73,6 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
     private fun resetDb() {
         val db = get<AppDatabase>()
         db.measurementDao().deleteAll()
-        db.measurementDao().insertAll(MeasurementDummyRepository.generateMeasurements())
+        db.measurementDao().insertAll(MeasurementDummyRepository.generateMeasurements(200))
     }
 }
