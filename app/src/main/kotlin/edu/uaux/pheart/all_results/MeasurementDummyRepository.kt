@@ -1,37 +1,30 @@
 package edu.uaux.pheart.all_results
 
+import edu.uaux.pheart.database.ActivityLevel
+import edu.uaux.pheart.database.Measurement
 import java.time.Instant
+import kotlin.random.Random
 
 class MeasurementDummyRepository {
 
     companion object {
-        val allMeasurements = listOf(
-            Measurement(72, Instant.parse("2021-12-03T10:15:30.00Z")),
-            Measurement(108, Instant.parse("2021-12-03T14:15:30.00Z")),
-            Measurement(64, Instant.parse("2022-01-02T09:15:00.00Z")),
-            Measurement(89, Instant.parse("2022-01-02T10:15:30.00Z")),
-            Measurement(72, Instant.parse("2022-12-03T10:15:30.00Z")),
-            Measurement(108, Instant.parse("2022-12-03T14:15:30.00Z")),
-            Measurement(64, Instant.parse("2023-01-02T09:15:00.00Z")),
-            Measurement(89, Instant.parse("2023-01-02T10:15:30.00Z")),
-            Measurement(72, Instant.parse("2023-02-10T10:15:30.00Z")),
-            Measurement(108, Instant.parse("2023-02-10T14:15:30.00Z")),
-            Measurement(64, Instant.parse("2023-01-02T12:15:00.00Z")),
-            Measurement(89, Instant.parse("2023-01-02T18:15:30.00Z")),
-            Measurement(72, Instant.parse("2021-12-03T10:15:30.00Z")),
-            Measurement(108, Instant.parse("2021-12-03T14:15:30.00Z")),
-            Measurement(64, Instant.parse("2022-01-02T09:15:00.00Z")),
-            Measurement(89, Instant.parse("2022-01-02T10:15:30.00Z")),
-            Measurement(72, Instant.parse("2022-12-03T10:15:30.00Z")),
-            Measurement(108, Instant.parse("2022-12-03T14:15:30.00Z")),
-            Measurement(64, Instant.parse("2023-01-02T09:15:00.00Z")),
-            Measurement(89, Instant.parse("2023-01-02T10:15:30.00Z")),
-            Measurement(72, Instant.parse("2023-02-10T10:15:30.00Z")),
-            Measurement(108, Instant.parse("2023-02-10T14:15:30.00Z")),
-            Measurement(64, Instant.parse("2023-01-02T12:15:00.00Z")),
-            Measurement(89, Instant.parse("2023-01-02T18:15:30.00Z")),
-        )
+        fun generateMeasurements(number: Int = 50): List<Measurement> {
+            val startTime = Instant.now().epochSecond
 
-        val allMeasurementsDescending = allMeasurements.sortedByDescending { it.date }
+            return buildList {
+                repeat(number) {
+                    add(Measurement(startTime - (it * 60 * 60 * 8), randomBpm(), randomActivityLevel()))
+                }
+            }.sortedByDescending { it.timestamp }
+        }
+
+        private fun randomBpm() = Random.nextInt(35, 125)
+        private fun randomActivityLevel() = when (Random.nextInt(0, 4)) {
+            0 -> ActivityLevel.RELAXED
+            1 -> ActivityLevel.SEATED
+            2 -> ActivityLevel.LIGHT_EXERCISE
+            3 -> ActivityLevel.HEAVY_EXERCISE
+            else -> ActivityLevel.RELAXED
+        }
     }
 }

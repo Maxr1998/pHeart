@@ -5,13 +5,19 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView.OnItemSelectedListener
 import edu.uaux.pheart.all_results.AllResultsFragment
+import edu.uaux.pheart.all_results.MeasurementDummyRepository
+import edu.uaux.pheart.database.AppDatabase
 import edu.uaux.pheart.measure.MeasureSettingsFragment
 import edu.uaux.pheart.preferences.PreferencesFragment
 import edu.uaux.pheart.profile.ProfileFragment
 import edu.uaux.pheart.statistics.StatisticsFragment
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.koin.android.ext.android.get
 
 class MainActivity : AppCompatActivity(), OnItemSelectedListener {
@@ -21,6 +27,12 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        lifecycleScope.launch {
+            withContext(Dispatchers.IO) {
+                resetDb()
+            }
+        }
 
         navigationView = findViewById(R.id.bottom_navigation)
         navigationView.setOnItemSelectedListener(this)
@@ -56,5 +68,11 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
             true
         }
         else -> false
+    }
+
+    private fun resetDb() {
+        val db = get<AppDatabase>()
+        db.measurementDao().deleteAll()
+        db.measurementDao().insertAll(MeasurementDummyRepository.generateMeasurements())
     }
 }

@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import edu.uaux.pheart.R
+import edu.uaux.pheart.database.Measurement
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
