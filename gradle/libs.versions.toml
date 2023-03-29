@@ -22,6 +22,7 @@ material = "1.8.0"
 androidx-constraintlayout = "2.1.4"
 androidx-recyclerview = "1.2.1"
 androidx-fragment = "1.5.5"
+mpandroidchart = "3.1.0"
 modernandroidpreferences = "2.3.2"
 coil = "2.2.2"
 
@@ -80,6 +81,7 @@ material = { module = "com.google.android.material:material", version.ref = "mat
 androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "androidx-constraintlayout" }
 androidx-recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "androidx-recyclerview" }
 androidx-fragment = { module = "androidx.fragment:fragment-ktx", version.ref = "androidx-fragment" }
+mpandroidchart = { module = "com.github.PhilJay:MPAndroidChart", version.ref = "mpandroidchart" }
 modernandroidpreferences = { module = "de.maxr1998:modernandroidpreferences", version.ref = "modernandroidpreferences" }
 coil = { group = "io.coil-kt", name = "coil", version.ref = "coil" }
 

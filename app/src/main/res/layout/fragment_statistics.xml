@@ -71,24 +71,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/time_text"
             tools:text="27. March" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ImageView
-        android:id="@+id/graph_placeholder"
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/graph"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_percent="0.3"
         app:layout_constraintTop_toBottomOf="@id/header_recycler" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/daily_stats_recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/graph_placeholder">
+        app:layout_constraintTop_toBottomOf="@id/graph">
 
         <TextView
             android:id="@+id/daily_stats_title"
@@ -184,8 +180,5 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="140 bpm" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
