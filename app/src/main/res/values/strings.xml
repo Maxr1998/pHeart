@@ -12,4 +12,16 @@
     <string name="button_start_measurement">Start</string>
     <string name="button_redo_measurement">Redo</string>
     <string name="button_save_measurement">Save</string>
+    <string name="statistics_btn_day_">day</string>
+    <string name="statistics_btn_week">week</string>
+    <string name="statistics_header_daily">Daily statistics</string>
+    <string name="statistics_average">Average</string>
+    <string name="statistics_minimum">Minimum</string>
+    <string name="statistics_maximum">Maximum</string>
+    <string name="profile_age">Age</string>
+    <string name="profile_weight">Weight</string>
+    <string name="profile_height">Height</string>
+    <string name="profile_info_text_resting_heart_rate">Your resting heart rate should be between 60 and 100 bpm.</string>
+    <string name="profile_info_text_maximum_heart_rate">Your maximum heart rate is approximately 190–200 bpm.</string>
+    <string name="profile_info_text_exercise_heart_rate">Your recommended exercise heart rate is 160–180 bpm.</string>
 </resources>
