@@ -9,7 +9,7 @@ import androidx.room.Query
 @Dao
 interface MeasurementDao {
 
-    @Query("select * from user")
+    @Query("select * from user order by timestamp desc")
     fun getAll(): LiveData<List<Measurement>>
 
     /**

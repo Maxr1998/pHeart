@@ -12,5 +12,5 @@ data class Measurement(
     @ColumnInfo(name = "activity_level") val activityLevel: ActivityLevel,
 ) {
     val dateInstant: Instant
-        get() = Instant.ofEpochMilli(timestamp)
+        get() = Instant.ofEpochSecond(timestamp)
 }
