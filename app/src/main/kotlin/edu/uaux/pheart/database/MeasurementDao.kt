@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import java.time.ZonedDateTime
 
 @Dao
 interface MeasurementDao {
@@ -15,8 +16,8 @@ interface MeasurementDao {
     /**
      * Note: start and end inclusive
      */
-    @Query("select * from user where timestamp between (:start) and (:end)")
-    fun getAll(start: Long, end: Long): LiveData<List<Measurement>>
+    @Query("select * from user where timestamp between (:start) and (:end) order by timestamp desc")
+    suspend fun getAll(start: ZonedDateTime, end: ZonedDateTime): List<Measurement>
 
     @Insert
     fun insert(measurement: Measurement)
