@@ -9,6 +9,7 @@
     <string name="screen_name_preferences">Preferences</string>
 
     <string name="title_new_measurement">New measurement</string>
+    <string name="button_start_measurement">Start</string>
     <string name="button_redo_measurement">Redo</string>
     <string name="button_save_measurement">Save</string>
 </resources>

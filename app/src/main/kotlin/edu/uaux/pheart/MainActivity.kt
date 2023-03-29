@@ -8,6 +8,7 @@ import androidx.fragment.app.commit
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import edu.uaux.pheart.all_results.AllResultsFragment
 import edu.uaux.pheart.measure.MeasureActivity
+import edu.uaux.pheart.measure.MeasureSettingsFragment
 import edu.uaux.pheart.preferences.PreferencesFragment
 import edu.uaux.pheart.profile.ProfileFragment
 import edu.uaux.pheart.statistics.StatisticsFragment
@@ -34,7 +35,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.screen_add_measurement -> {
-                    startActivity(Intent(this, MeasureActivity::class.java))
+                    replaceFragment<MeasureSettingsFragment>()
                     true
                 }
                 R.id.screen_profile -> {
