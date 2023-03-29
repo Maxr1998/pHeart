@@ -9,8 +9,7 @@ import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import edu.uaux.pheart.R
 import edu.uaux.pheart.database.Measurement
-import java.text.SimpleDateFormat
-import java.util.Date
+import java.time.format.DateTimeFormatter
 import java.util.Locale
 
 class MeasurementAdapter() : Adapter<MeasurementAdapter.MeasurementViewHolder>() {
@@ -22,7 +21,7 @@ class MeasurementAdapter() : Adapter<MeasurementAdapter.MeasurementViewHolder>()
             notifyDataSetChanged()
         }
 
-    private val dateFormatter = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
+    private val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm", Locale.getDefault())
 
     class MeasurementViewHolder(view: View) : ViewHolder(view) {
         val bpmText: TextView = view.findViewById(R.id.bpm_text)
@@ -40,6 +39,6 @@ class MeasurementAdapter() : Adapter<MeasurementAdapter.MeasurementViewHolder>()
         val measurement = measurements[position]
 
         holder.bpmText.text = measurement.bpm.toString() + " bpm"
-        holder.datetimeText.text = dateFormatter.format(Date.from(measurement.dateInstant))
+        holder.datetimeText.text = measurement.timestamp.format(dateFormatter)
     }
 }

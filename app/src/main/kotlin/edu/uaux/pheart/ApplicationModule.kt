@@ -18,10 +18,8 @@ val applicationModule = module {
     fragment { ProfileFragment() }
     fragment { PreferencesFragment() }
     single {
-        Room.databaseBuilder(
-            get<Application>(),
-            AppDatabase::class.java,
-            name = "db",
-        ).build()
+        Room.databaseBuilder(get<Application>(), AppDatabase::class.java, name = "db")
+            .fallbackToDestructiveMigration()
+            .build()
     }
 }
