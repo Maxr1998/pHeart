@@ -1,0 +1,13 @@
+<resources>
+    <declare-styleable name="HeartRangeView">
+        <attr name="lowerBound" format="integer" />
+        <attr name="upperBound" format="integer" />
+        <attr name="greenStart" format="integer" />
+        <attr name="greenEnd" format="integer" />
+        <attr name="currentValue" format="integer" />
+        <attr name="warningColor" format="color" />
+        <attr name="goodColor" format="color" />
+        <attr name="markerWidth" format="dimension" />
+
+    </declare-styleable>
+</resources>
