@@ -20,6 +20,8 @@ import edu.uaux.pheart.R
 import edu.uaux.pheart.util.avgOf
 import edu.uaux.pheart.util.ext.resolveThemeColor
 import edu.uaux.pheart.util.ext.toast
+import java.time.ZoneId
+import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
@@ -40,6 +42,9 @@ class StatisticsFragment : Fragment() {
     private lateinit var dailyAverageTextView: TextView
     private lateinit var dailyMinimumTextView: TextView
     private lateinit var dailyMaximumTextView: TextView
+
+    private lateinit var previousDayButton: Button
+    private lateinit var nextDayButton: Button
 
 
     private val timeFormat = DateTimeFormatter.ofPattern("HH:mm", Locale.getDefault())
@@ -74,9 +79,17 @@ class StatisticsFragment : Fragment() {
         viewModel.dayInstant.observe(this) { day ->
             if (day == null) {
                 dateTextView.setText(R.string.no_value_indicator)
+                nextDayButton.isEnabled = false
+                previousDayButton.isEnabled = false
                 return@observe
             }
             dateTextView.text = day.format(dateFormat)
+
+            val startOfToday = ZonedDateTime.now(ZoneId.systemDefault()).run {
+                ZonedDateTime.of(year, monthValue, dayOfMonth, 0, 0, 0, 0, ZoneId.systemDefault())
+            }
+            nextDayButton.isEnabled = day.isBefore(startOfToday)
+            previousDayButton.isEnabled = true
         }
     }
 
@@ -103,6 +116,17 @@ class StatisticsFragment : Fragment() {
             view.findViewById<ConstraintLayout>(R.id.minimum_bpm_container).findViewById(R.id.bpm_text)
         dailyMaximumTextView =
             view.findViewById<ConstraintLayout>(R.id.maximum_bpm_container).findViewById(R.id.bpm_text)
+
+        previousDayButton = view.findViewById(R.id.btn_prev)
+        nextDayButton = view.findViewById(R.id.btn_next)
+
+        previousDayButton.setOnClickListener {
+            viewModel.toPreviousDay()
+        }
+
+        nextDayButton.setOnClickListener {
+            viewModel.toNextDay()
+        }
 
         buttonGroup.addOnButtonCheckedListener { _, button, isChecked ->
             if (isChecked) {

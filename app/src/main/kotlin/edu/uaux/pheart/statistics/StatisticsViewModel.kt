@@ -80,4 +80,16 @@ class StatisticsViewModel(app: Application) : AndroidViewModel(app), KoinCompone
             _statisticsMode.value = mode
         }
     }
+
+    fun toNextDay() {
+        _dayInstant.value?.let {
+            loadDay(it.plusDays(1))
+        }
+    }
+
+    fun toPreviousDay() {
+        _dayInstant.value?.let {
+            loadDay(it.minusDays(1))
+        }
+    }
 }

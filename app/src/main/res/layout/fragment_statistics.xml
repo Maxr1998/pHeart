@@ -61,6 +61,17 @@
             app:layout_constraintTop_toBottomOf="@id/selected_heart_rate"
             tools:text="16:00" />
 
+        <Button
+            android:id="@+id/btn_prev"
+            style="?attr/materialIconButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            app:icon="@drawable/ic_chevron_left_24"
+            app:layout_constraintBottom_toBottomOf="@id/date_text"
+            app:layout_constraintEnd_toStartOf="@id/date_text"
+            app:layout_constraintTop_toTopOf="@id/date_text" />
+
         <TextView
             android:id="@+id/date_text"
             style="@style/TextAppearance.Material3.BodyLarge"
@@ -70,6 +81,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/time_text"
             tools:text="27. March" />
+
+        <Button
+            android:id="@+id/btn_next"
+            style="?attr/materialIconButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            app:icon="@drawable/ic_chevron_right_24"
+            app:layout_constraintBottom_toBottomOf="@id/date_text"
+            app:layout_constraintStart_toEndOf="@id/date_text"
+            app:layout_constraintTop_toTopOf="@id/date_text" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.github.mikephil.charting.charts.BarChart
