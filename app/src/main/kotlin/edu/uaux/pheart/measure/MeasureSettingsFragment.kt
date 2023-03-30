@@ -93,7 +93,7 @@ class MeasureSettingsFragment : Fragment() {
             Intent(requireActivity(), MeasureActivity::class.java).apply {
                 putExtra(MeasureActivity.EXTRA_MEASUREMENT_TYPE, viewModel.measurementType as Parcelable)
                 putExtra(MeasureActivity.EXTRA_ACTIVITY_LEVEL, viewModel.activityLevel as Parcelable)
-                putExtra(MeasureActivity.EXTRA_MEASUREMENT_DURATION, viewModel.measurementDuration)
+                putExtra(MeasureActivity.EXTRA_MEASURE_DURATION, viewModel.measurementDuration)
                 startActivity(this)
             }
         }

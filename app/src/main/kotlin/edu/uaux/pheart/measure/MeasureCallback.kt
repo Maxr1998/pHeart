@@ -2,11 +2,11 @@ package edu.uaux.pheart.measure
 
 import android.graphics.PointF
 
-interface MeasurementCallback {
+interface MeasureCallback {
     /**
      * Called when a new luminance measurement from the camera was performed by the analyzer.
      */
-    fun onMeasurementTaken(timestamp: Long, averageLuminance: Double)
+    fun onLuminanceMeasured(value: LuminanceMeasurement)
 
     /**
      * Called when the measurement was cancelled by the analyzer, e.g., because no face was detected anymore.

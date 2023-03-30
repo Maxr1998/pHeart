@@ -15,7 +15,7 @@ import java.util.concurrent.Executors
 
 class FacialHeartRateAnalyzer(
     private val callbackExecutor: Executor,
-    private val callback: MeasurementCallback,
+    private val callback: MeasureCallback,
 ) : ImageAnalysis.Analyzer, Consumer<MlKitAnalyzer.Result> {
 
     private val faceDetector = FaceDetectionHelper.buildFaceDetector()

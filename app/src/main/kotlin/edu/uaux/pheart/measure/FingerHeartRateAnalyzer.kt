@@ -8,7 +8,7 @@ import java.util.concurrent.Executors
 
 class FingerHeartRateAnalyzer(
     private val callbackExecutor: Executor,
-    private val callback: MeasurementCallback,
+    private val callback: MeasureCallback,
 ) : ImageAnalysis.Analyzer {
 
     private val backgroundExecutor: Executor = Executors.newSingleThreadExecutor()
@@ -20,16 +20,17 @@ class FingerHeartRateAnalyzer(
     override fun analyze(image: ImageProxy) {
         require(image.format == ImageFormat.YUV_420_888)
         val timestamp = image.imageInfo.timestamp
-        val yPlane = image.planes.first()
+        val yPlane = image.planes[0]
         val buffer = yPlane.buffer
         var sum = 0UL
         while (buffer.hasRemaining()) {
             sum += buffer.get().toUByte().toULong()
         }
         val average = sum.toDouble() / buffer.limit()
+        val measurement = LuminanceMeasurement(timestamp, average)
 
         callbackExecutor.execute {
-            callback.onMeasurementTaken(timestamp, average)
+            callback.onLuminanceMeasured(measurement)
         }
 
         image.close()

@@ -26,26 +26,31 @@ import org.koin.core.component.inject
 import java.time.ZonedDateTime
 import java.util.concurrent.Executor
 
-class MeasureActivity : AppCompatActivity(), MeasurementCallback, KoinComponent {
+class MeasureActivity : AppCompatActivity(), MeasureCallback, KoinComponent {
 
     companion object {
         const val DEBUG = false
 
         const val EXTRA_MEASUREMENT_TYPE = "edu.uaux.pheart.measure.EXTRA_MEASUREMENT_TYPE"
         const val EXTRA_ACTIVITY_LEVEL = "edu.uaux.pheart.measure.EXTRA_ACTIVITY_LEVEL"
-        const val EXTRA_MEASUREMENT_DURATION = "edu.uaux.pheart.measure.EXTRA_MEASUREMENT_DURATION"
+        const val EXTRA_MEASURE_DURATION = "edu.uaux.pheart.measure.EXTRA_MEASUREMENT_DURATION"
+    }
+
+    enum class MeasureState {
+        IDLE,
+        MEASURING,
+        FINISHED,
     }
 
     private val permissionHelper = CameraPermissionHelper(this) {
         startCamera()
     }
-
     private val measurementDao: MeasurementDao by inject()
 
     // Intent extras
     private lateinit var measurementType: MeasurementType
     private lateinit var activityLevel: ActivityLevel
-    private var measurementDuration: Int = DEFAULT_DURATION
+    private var measureDuration: Int = DEFAULT_DURATION
 
     // Executor
     private lateinit var executor: Executor
@@ -56,13 +61,17 @@ class MeasureActivity : AppCompatActivity(), MeasurementCallback, KoinComponent 
     private lateinit var overlay: OverlayView
     private lateinit var saveButton: Button
 
+    // State
+    private var measureState = MeasureState.IDLE
+    private val luminanceMeasurements: MutableList<LuminanceMeasurement> = mutableListOf()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_measure)
 
         measurementType = intent.extras?.getParcelableCompat(EXTRA_MEASUREMENT_TYPE) ?: MeasurementType.FACE
         activityLevel = intent.extras?.getParcelableCompat(EXTRA_ACTIVITY_LEVEL) ?: ActivityLevel.RELAXED
-        measurementDuration = intent.extras?.getInt(EXTRA_MEASUREMENT_DURATION, DEFAULT_DURATION) ?: DEFAULT_DURATION
+        measureDuration = intent.extras?.getInt(EXTRA_MEASURE_DURATION, DEFAULT_DURATION) ?: DEFAULT_DURATION
 
         executor = ContextCompat.getMainExecutor(this)
         statusText = findViewById(R.id.status_text)
@@ -110,8 +119,8 @@ class MeasureActivity : AppCompatActivity(), MeasurementCallback, KoinComponent 
         }
     }
 
-    override fun onMeasurementTaken(timestamp: Long, averageLuminance: Double) {
-        // TODO: Store measurement
+    override fun onLuminanceMeasured(value: LuminanceMeasurement) {
+        luminanceMeasurements += value
     }
 
     override fun onShowPoints(points: List<PointF>, imageWidth: Int, imageHeight: Int) {
@@ -154,7 +163,9 @@ class MeasureActivity : AppCompatActivity(), MeasurementCallback, KoinComponent 
         super.onStop()
 
         // Finish activity and abort measurement if the user leaves the activity
-        toast(R.string.toast_warning_measurement_cancelled)
-        finish()
+        if (measureState == MeasureState.MEASURING) {
+            toast(R.string.toast_warning_measurement_cancelled)
+            finish()
+        }
     }
 }
