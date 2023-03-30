@@ -3,7 +3,6 @@
 android-plugin = "7.4.2"
 kotlin = "1.8.10"
 ksp = "1.8.10-1.0.9"
-proguard-dictionaries = "1.0.8"
 detekt = "1.22.0"
 android-junit5 = "1.8.2.1"
 
@@ -24,7 +23,6 @@ androidx-recyclerview = "1.2.1"
 androidx-fragment = "1.5.5"
 mpandroidchart = "3.1.0"
 modernandroidpreferences = "2.3.2"
-coil = "2.2.2"
 
 # Camera & face detection
 androidx-camera = "1.2.2"
@@ -37,9 +35,6 @@ androidx-lifecycle = "2.5.1"
 # Room
 androidx-room = "2.5.0"
 
-# Networking
-okhttp = "4.10.0"
-
 # Monitoring
 timber = "5.0.1"
 leakcanary = "2.10"
@@ -47,17 +42,12 @@ kotest = "5.5.5"
 androidx-test-runner = "1.5.2"
 androidx-test-espresso = "3.5.1"
 
-# Plugin module dependencies
-kotlinpoet = "1.12.0"
-kaml = "0.52.0"
-
 [plugins]
 android-app = { id = "com.android.application", version.ref = "android-plugin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
-proguard-dictionaries = { id = "ru.cleverpumpkin.proguard-dictionaries-generator", version.ref = "proguard-dictionaries" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 android-junit5 = { id = "de.mannodermaus.android-junit5", version.ref = "android-junit5" }
 parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
@@ -84,7 +74,6 @@ androidx-recyclerview = { module = "androidx.recyclerview:recyclerview", version
 androidx-fragment = { module = "androidx.fragment:fragment-ktx", version.ref = "androidx-fragment" }
 mpandroidchart = { module = "com.github.PhilJay:MPAndroidChart", version.ref = "mpandroidchart" }
 modernandroidpreferences = { module = "de.maxr1998:modernandroidpreferences", version.ref = "modernandroidpreferences" }
-coil = { group = "io.coil-kt", name = "coil", version.ref = "coil" }
 
 # Camera & face detection
 androidx-camera-camera2 = { group = "androidx.camera", name = "camera-camera2", version.ref = "androidx-camera" }
@@ -104,9 +93,6 @@ androidx-room-runtime = { group = "androidx.room", name = "room-runtime", versio
 androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "androidx-room" }
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "androidx-room" }
 androidx-room-testing = { group = "androidx.room", name = "room-testing", version.ref = "androidx-room" }
-
-# Networking
-okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
 
 # Monitoring
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }

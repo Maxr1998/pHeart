@@ -102,7 +102,6 @@ dependencies {
     implementation(libs.androidx.fragment)
     implementation(libs.mpandroidchart)
     implementation(libs.modernandroidpreferences)
-    implementation(libs.coil)
 
     // Camera & face detection
     implementation(libs.androidx.camera.camera2)
@@ -117,9 +116,6 @@ dependencies {
     // Room
     implementation(libs.bundles.androidx.room)
     ksp(libs.androidx.room.compiler)
-
-    // Network
-    implementation(libs.okhttp)
 
     // Health
     implementation(libs.timber)
