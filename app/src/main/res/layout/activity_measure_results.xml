@@ -21,28 +21,15 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <TextView
-        android:id="@+id/bpm_value_text"
-        style="@style/TextAppearance.Material3.DisplayLarge"
+    <include
+        android:id="@+id/measured_heart_rate"
+        layout="@layout/display_bpm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
-        android:text="--"
-        app:layout_constraintEnd_toStartOf="@id/bpm_unit_text"
-        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/appBarLayout" />
-
-    <TextView
-        android:id="@+id/bpm_unit_text"
-        style="@style/TextAppearance.Material3.BodyLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:letterSpacing="0.2"
-        android:text="@string/bpm_unit"
-        app:layout_constraintBaseline_toBaselineOf="@id/bpm_value_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/bpm_value_text" />
 
     <TextView
         android:id="@+id/measurement_date_text"
@@ -51,10 +38,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
         android:letterSpacing="0.05"
-        android:text=""
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/bpm_unit_text" />
+        app:layout_constraintTop_toBottomOf="@id/measured_heart_rate"
+        tools:text="23. March 2022" />
 
 
     <View
@@ -129,7 +116,6 @@
         android:layout_height="wrap_content"
         android:visibility="visible"
         app:constraint_referenced_ids="compare_last_week_average_value,compare_yesterday_average_value,compare_yesterday_average_text,compare_last_week_average_text,resting_rating_graph" />
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

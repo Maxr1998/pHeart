@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import edu.uaux.pheart.R
 import edu.uaux.pheart.database.Measurement
 import java.time.format.DateTimeFormatter
@@ -29,7 +30,7 @@ class MeasureResultsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_measure_results)
 
-        bpmTextView = findViewById(R.id.bpm_value_text)
+        bpmTextView = findViewById<ConstraintLayout>(R.id.measured_heart_rate).findViewById(R.id.bpm_text)
         measurementDateTextView = findViewById(R.id.measurement_date_text)
         comparedToYesterdayTextView = findViewById(R.id.compare_yesterday_average_value)
         comparedToLast7DaysTextView = findViewById(R.id.compare_last_week_average_value)
