@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".measure.MeasureResultsActivity">
+
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/topAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:title="@string/title_new_measurement" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <TextView
+        android:id="@+id/bpm_value_text"
+        style="@style/TextAppearance.Material3.DisplayLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:text="--"
+        app:layout_constraintEnd_toStartOf="@id/bpm_unit_text"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appBarLayout" />
+
+    <TextView
+        android:id="@+id/bpm_unit_text"
+        style="@style/TextAppearance.Material3.BodyLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:letterSpacing="0.2"
+        android:text="@string/bpm_unit"
+        app:layout_constraintBaseline_toBaselineOf="@id/bpm_value_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/bpm_value_text" />
+
+    <TextView
+        android:id="@+id/measurement_date_text"
+        style="@style/TextAppearance.Material3.HeadlineMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:letterSpacing="0.05"
+        android:text=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bpm_unit_text" />
+
+
+    <View
+        android:id="@+id/resting_rating_graph"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="48dp"
+
+        android:background="#ff0000"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/measurement_date_text" />
+
+    <!-- TODO add textviews for the other measurements -->
+
+
+    <TextView
+        android:id="@+id/compare_yesterday_average_value"
+        style="@style/TextAppearance.Material3.BodyLarge"
+        android:layout_width="48sp"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:text="--"
+        app:layout_constraintEnd_toStartOf="@id/compare_yesterday_average_text"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/compare_yesterday_average_text" />
+
+
+    <TextView
+        android:id="@+id/compare_yesterday_average_text"
+        style="@style/TextAppearance.Material3.BodyLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="48dp"
+        android:text="@string/compare_yesterday_average"
+
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@id/compare_yesterday_average_value"
+        app:layout_constraintTop_toBottomOf="@id/resting_rating_graph" />
+
+    <TextView
+        android:id="@+id/compare_last_week_average_value"
+        style="@style/TextAppearance.Material3.BodyLarge"
+        android:layout_width="48sp"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:text="--"
+        app:layout_constraintEnd_toEndOf="@+id/compare_yesterday_average_value"
+        app:layout_constraintTop_toTopOf="@id/compare_last_week_average_text" />
+
+    <TextView
+        android:id="@+id/compare_last_week_average_text"
+        style="@style/TextAppearance.Material3.BodyLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/compare_last_week_average"
+
+        app:layout_constraintStart_toStartOf="@+id/compare_yesterday_average_text"
+        app:layout_constraintTop_toBottomOf="@id/compare_yesterday_average_text" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/resting_view_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:constraint_referenced_ids="compare_last_week_average_value,compare_yesterday_average_value,compare_yesterday_average_text,compare_last_week_average_text,resting_rating_graph" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

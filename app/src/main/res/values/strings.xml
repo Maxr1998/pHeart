@@ -42,4 +42,7 @@
     <string name="profile_resting_heart_rate_info_text">When you are not engaged in any physical activity or stress your heart rate should be around this level, although it can vary depending on factors such as age, fitness level, and overall health. A lower resting heart rate is generally considered a sign of good cardiovascular health and fitness.</string>
     <string name="profile_exercise_heart_rate_title">Exercise heart rate</string>
     <string name="profile_exercise_heart_rate_info_text">Exercising within this range can improve your cardiovascular fitness, lower your risk of heart disease, and improve overall health. However, it is important to consult with a healthcare professional before starting any exercise program to ensure it is safe and appropriate for you.</string>
+    <string name="bpm_unit">BPM</string>
+    <string name="compare_last_week_average">compared to last 7 days</string>
+    <string name="compare_yesterday_average">compared to yesterday\'s average</string>
 </resources>

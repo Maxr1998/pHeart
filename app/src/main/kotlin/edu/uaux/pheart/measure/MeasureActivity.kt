@@ -1,8 +1,10 @@
 package edu.uaux.pheart.measure
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.PointF
 import android.os.Bundle
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -13,11 +15,16 @@ import androidx.core.content.ContextCompat
 import com.google.mlkit.vision.face.Face
 import edu.uaux.pheart.R
 import edu.uaux.pheart.database.ActivityLevel
+import edu.uaux.pheart.database.Measurement
+import edu.uaux.pheart.database.MeasurementDao
 import edu.uaux.pheart.measure.MeasureSettingsViewModel.Companion.DEFAULT_DURATION
 import edu.uaux.pheart.util.ext.getParcelableCompat
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
+import java.time.ZonedDateTime
 import java.util.concurrent.Executor
 
-class MeasureActivity : AppCompatActivity(), FacialHeartRateAnalyzer.Callback {
+class MeasureActivity : AppCompatActivity(), FacialHeartRateAnalyzer.Callback, KoinComponent {
 
     companion object {
         const val EXTRA_MEASUREMENT_TYPE = "edu.uaux.pheart.measure.EXTRA_MEASUREMENT_TYPE"
@@ -29,6 +36,8 @@ class MeasureActivity : AppCompatActivity(), FacialHeartRateAnalyzer.Callback {
         startCamera()
     }
 
+    private val measurementDao: MeasurementDao by inject()
+
     private lateinit var measurementType: MeasurementType
     private lateinit var activityLevel: ActivityLevel
     private var measurementDuration: Int = DEFAULT_DURATION
@@ -36,6 +45,7 @@ class MeasureActivity : AppCompatActivity(), FacialHeartRateAnalyzer.Callback {
     private lateinit var statusText: TextView
     private lateinit var cameraPreview: PreviewView
     private lateinit var overlay: OverlayView
+    private lateinit var saveButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +62,11 @@ class MeasureActivity : AppCompatActivity(), FacialHeartRateAnalyzer.Callback {
 
         // Requests camera permissions and starts the camera when the permission has been granted
         permissionHelper.requireCameraPermission()
+
+        saveButton = findViewById(R.id.button_save_measurement)
+        saveButton.setOnClickListener {
+            onSaveMeasurement()
+        }
     }
 
     private fun startCamera() {
@@ -114,5 +129,15 @@ class MeasureActivity : AppCompatActivity(), FacialHeartRateAnalyzer.Callback {
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         permissionHelper.handlePermissionsResult(requestCode, permissions, grantResults)
+    }
+
+    private fun onSaveMeasurement() {
+        val measurement = Measurement(ZonedDateTime.now().plusDays(180), 80, ActivityLevel.LIGHT_EXERCISE)
+        measurementDao.insert(measurement)
+
+        val intent = Intent(this, MeasureResultsActivity::class.java)
+        intent.putExtra(MeasureResultsActivity.EXTRA_MEASUREMENT, measurement)
+
+        startActivity(intent)
     }
 }
