@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.github.mikephil.charting.charts.BarChart
@@ -98,6 +99,22 @@ class StatisticsFragment : Fragment() {
         dailyMinimumTextView = view.findViewById(R.id.daily_minimum_bpm_text)
         dailyMaximumTextView = view.findViewById(R.id.daily_maximum_bpm_text)
 
+        buttonGroup.addOnButtonCheckedListener { _, button, isChecked ->
+            if (isChecked) {
+                when (button) {
+                    R.id.btn_day -> {
+                        viewModel.switchTo(StatisticsFragmentMode.DAILY)
+                        Toast.makeText(context, "daily stats", Toast.LENGTH_SHORT).show()
+                    }
+                    R.id.btn_week -> {
+                        viewModel.switchTo(StatisticsFragmentMode.WEEKLY)
+                        Toast.makeText(context, "weekly stats", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+
+        viewModel.switchTo(StatisticsFragmentMode.DAILY)
         viewModel.loadToday()
         styleChart()
         updateChartData()

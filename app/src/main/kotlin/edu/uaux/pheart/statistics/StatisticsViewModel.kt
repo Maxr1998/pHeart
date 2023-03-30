@@ -27,12 +27,16 @@ class StatisticsViewModel(app: Application) : AndroidViewModel(app), KoinCompone
     private val _dailyMeasurements: MutableLiveData<List<Measurement>> = MutableLiveData(emptyList())
     private val _dayInstant: MutableLiveData<ZonedDateTime?> = MutableLiveData(null)
 
+    private val _statisticsMode: MutableLiveData<StatisticsFragmentMode> = MutableLiveData(StatisticsFragmentMode.DAILY)
+
     val selectedMeasurement: LiveData<AverageBpm?>
         get() = _selectedMeasurement
     val dailyMeasurements: LiveData<List<Measurement>>
         get() = _dailyMeasurements
     val dayInstant: LiveData<ZonedDateTime?>
         get() = _dayInstant
+    val statisticsMode: LiveData<StatisticsFragmentMode>
+        get() = _statisticsMode
 
     fun loadToday() {
         loadDay(ZonedDateTime.now(ZoneId.systemDefault()))
@@ -80,4 +84,10 @@ class StatisticsViewModel(app: Application) : AndroidViewModel(app), KoinCompone
     }
 
     data class AverageBpm(val timeOfDay: TimeOfDay, val avgBpm: Int)
+
+    fun switchTo(mode: StatisticsFragmentMode) {
+        if (mode != _statisticsMode.value) {
+            _statisticsMode.value = mode
+        }
+    }
 }
