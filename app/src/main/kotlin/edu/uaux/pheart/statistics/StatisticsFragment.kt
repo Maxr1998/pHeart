@@ -19,6 +19,7 @@ import com.github.mikephil.charting.data.BarEntry
 import com.google.android.material.button.MaterialButtonToggleGroup
 import edu.uaux.pheart.R
 import edu.uaux.pheart.util.avgOf
+import edu.uaux.pheart.util.ext.resolveThemeColor
 import edu.uaux.pheart.util.ext.toast
 import java.time.format.DateTimeFormatter
 import java.util.Locale
@@ -181,9 +182,7 @@ class StatisticsFragment : Fragment() {
 
     private fun styleDataset(barDataSet: BarDataSet) {
         barDataSet.axisDependency = YAxis.AxisDependency.RIGHT
-        context?.let {
-            barDataSet.color = it.getColor(R.color.material_dynamic_primary80)
-            barDataSet.highLightColor = it.getColor(R.color.material_dynamic_primary100)
-        }
+        barDataSet.color = requireContext().resolveThemeColor(R.attr.colorPrimary)
+        barDataSet.highLightColor = requireContext().resolveThemeColor(R.attr.colorPrimaryContainer)
     }
 }
