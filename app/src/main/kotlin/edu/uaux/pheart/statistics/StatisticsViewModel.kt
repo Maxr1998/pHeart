@@ -50,6 +50,7 @@ class StatisticsViewModel(app: Application) : AndroidViewModel(app), KoinCompone
             }
             _dailyMeasurements.value = dailyMeasurements
             _dayInstant.value = zonedDateTime
+            _selectedMeasurement.value = null
         }
     }
 
