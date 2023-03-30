@@ -15,9 +15,10 @@
 
     <TextView
         android:id="@+id/status_text"
-        style="@style/TextAppearance.Material3.BodyLarge"
+        style="@style/TextAppearance.Material3.DisplayLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="?attr/colorPrimary"
         app:layout_constraintBottom_toTopOf="@id/camera_preview"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -58,6 +59,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/screen_padding_horizontal"
         android:layout_marginBottom="@dimen/screen_padding_vertical"
+        android:enabled="false"
         android:text="@string/button_redo_measurement"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -69,6 +71,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/screen_padding_horizontal"
         android:layout_marginBottom="@dimen/screen_padding_vertical"
+        android:enabled="false"
         android:text="@string/button_save_measurement"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

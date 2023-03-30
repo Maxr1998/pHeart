@@ -7,7 +7,7 @@ import androidx.core.app.ActivityCompat
 
 class CameraPermissionHelper(
     private val activity: Activity,
-    private val onPermissionGranted: () -> Unit,
+    private val onPermissionRequestResult: (granted: Boolean) -> Unit,
 ) {
     companion object {
         private const val REQUEST_CODE_CAMERA = 420
@@ -16,15 +16,15 @@ class CameraPermissionHelper(
     /**
      * Whether the app has camera permissions.
      */
-    val hasCameraPermission: Boolean
+    private val hasCameraPermission: Boolean
         get() = ActivityCompat.checkSelfPermission(activity, CAMERA) == PERMISSION_GRANTED
 
     /**
-     * Request camera permissions if they aren't already granted, otherwise run [onPermissionGranted] immediately.
+     * Request camera permissions if they aren't already granted, otherwise run [onPermissionRequestResult] immediately.
      */
     fun requireCameraPermission() {
         if (hasCameraPermission) {
-            onPermissionGranted()
+            onPermissionRequestResult(true)
         } else {
             ActivityCompat.requestPermissions(activity, arrayOf(CAMERA), REQUEST_CODE_CAMERA)
         }
@@ -35,8 +35,8 @@ class CameraPermissionHelper(
      */
     fun handlePermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         require(permissions.size == grantResults.size)
-        if (requestCode == REQUEST_CODE_CAMERA && hasCameraPermission) {
-            onPermissionGranted()
+        if (requestCode == REQUEST_CODE_CAMERA) {
+            onPermissionRequestResult(hasCameraPermission)
         }
     }
 }
