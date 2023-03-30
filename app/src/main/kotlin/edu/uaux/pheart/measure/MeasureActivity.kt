@@ -136,18 +136,19 @@ class MeasureActivity : AppCompatActivity(), MeasurementCallback, KoinComponent 
     }
 
     private fun onSaveMeasurement() {
-        val measurement = Measurement(ZonedDateTime.now().plusDays(180), 80, ActivityLevel.LIGHT_EXERCISE)
-
         lifecycleScope.launch {
+            // TODO: replace stub measurement with real one
+            val measurement = Measurement(ZonedDateTime.now().plusDays(180), 80, ActivityLevel.LIGHT_EXERCISE)
+
             withContext(Dispatchers.IO) {
                 measurementDao.insert(measurement)
             }
+
+            Intent(this@MeasureActivity, MeasureResultsActivity::class.java).apply {
+                putExtra(MeasureResultsActivity.EXTRA_MEASUREMENT, measurement)
+                startActivity(this)
+            }
         }
-
-        val intent = Intent(this, MeasureResultsActivity::class.java)
-        intent.putExtra(MeasureResultsActivity.EXTRA_MEASUREMENT, measurement)
-
-        startActivity(intent)
     }
 
     override fun onStop() {
