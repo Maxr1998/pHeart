@@ -19,7 +19,7 @@ class PreferencesViewModel(app: Application) : AndroidViewModel(app) {
 
         singleChoice(
             PreferenceKeys.PREF_KEY_INTERVAL_REMINDER,
-            listOf(
+            items = listOf(
                 SelectionItem("30s", title = "30 seconds"),
                 SelectionItem("30m", title = "30 minutes"),
                 SelectionItem("1h", title = "1 hour"),
@@ -31,11 +31,15 @@ class PreferencesViewModel(app: Application) : AndroidViewModel(app) {
             ),
         ) {
             title = "Reminder Interval"
+            initialSelection = "30m"
+            dependency = PreferenceKeys.PREF_KEY_ENABLE_REMINDERS
         }
 
         switch(PreferenceKeys.PREF_KEY_RESPECT_DO_NOT_DISTURB) {
             title = "Do not disturb"
-            summary = "Ignore notifications when phone is in \"do not disturb\" mode."
+            summary = "Ignore notifications when the phone is in \"do not disturb\" mode."
+            defaultValue = true
+            dependency = PreferenceKeys.PREF_KEY_ENABLE_REMINDERS
         }
 
     }
