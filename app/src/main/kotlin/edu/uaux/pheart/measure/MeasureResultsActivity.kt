@@ -5,8 +5,10 @@ import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.lifecycle.lifecycleScope
 import edu.uaux.pheart.R
 import edu.uaux.pheart.database.Measurement
+import kotlinx.coroutines.launch
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
@@ -41,16 +43,25 @@ class MeasureResultsActivity : AppCompatActivity() {
             with(measurement) {
                 bpmTextView.text = bpm.toString()
                 measurementDateTextView.text = "${dateFormat.format(timestamp)}, ${timeFormat.format(timestamp)}"
+            }
+
+            lifecycleScope.launch {
                 viewModel.readMeasurementResults(measurement)
             }
         }
 
         viewModel.comparedToYesterday.observe(this) { comparedToYesterday ->
-            comparedToYesterdayTextView.text = "%+d".format(comparedToYesterday)
+            comparedToYesterdayTextView.text =
+                if (comparedToYesterday != null) "%+d".format(comparedToYesterday) else getString(
+                    R.string.compare_to_average_no_value,
+                )
         }
 
         viewModel.comparedToLast7Days.observe(this) { comparedToLast7Days ->
-            comparedToLast7DaysTextView.text = "%+d".format(comparedToLast7Days)
+            comparedToLast7DaysTextView.text =
+                if (comparedToLast7Days != null) "%+d".format(comparedToLast7Days) else getString(
+                    R.string.compare_to_average_no_value,
+                )
         }
     }
 }

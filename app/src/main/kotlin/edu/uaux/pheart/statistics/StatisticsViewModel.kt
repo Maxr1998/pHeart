@@ -43,24 +43,14 @@ class StatisticsViewModel(app: Application) : AndroidViewModel(app), KoinCompone
     }
 
     private fun loadDay(zonedDateTime: ZonedDateTime) {
-        val range = createDayRange(zonedDateTime)
+        val range = StatisticsUtils.createDayRange(zonedDateTime)
         this.viewModelScope.launch {
             val dailyMeasurements = withContext(Dispatchers.IO) {
-                measurementDao.getAll(range.first, range.second)
+                measurementDao.get(range)
             }
             _dailyMeasurements.value = dailyMeasurements
             _dayInstant.value = zonedDateTime
         }
-    }
-
-    private fun createDayRange(zonedDateTime: ZonedDateTime): Pair<ZonedDateTime, ZonedDateTime> {
-        val start = zonedDateTime.run {
-            ZonedDateTime.of(year, monthValue, dayOfMonth, 0, 0, 0, 0, zone)
-        }
-        val end = zonedDateTime.run {
-            ZonedDateTime.of(year, monthValue, dayOfMonth, 23, 59, 59, 999, zone)
-        }
-        return Pair(start, end)
     }
 
     val onChartValueSelectedListener = object : OnChartValueSelectedListener {
