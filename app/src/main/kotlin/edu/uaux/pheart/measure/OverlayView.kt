@@ -30,7 +30,6 @@ class OverlayView @JvmOverloads constructor(
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        canvas.drawPoint(0f, 0f, paint)
         canvas.drawPoint(imageWidth.toFloat(), imageHeight.toFloat(), paint)
         points.forEach { point ->
             canvas.drawPoint(width - point.x * width / imageWidth, point.y * height / imageHeight, paint)
