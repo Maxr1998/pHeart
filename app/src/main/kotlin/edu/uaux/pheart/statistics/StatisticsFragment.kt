@@ -69,6 +69,7 @@ class StatisticsFragment : Fragment() {
             if (selected == null) {
                 bpmTextView.setText(R.string.no_value_indicator)
                 timeTextView.setText(R.string.no_value_indicator)
+                barChart.highlightValue(0f, -1, false) // clear highlight
                 return@observe
             }
             bpmTextView.text = selected.avgBpm.toString()
