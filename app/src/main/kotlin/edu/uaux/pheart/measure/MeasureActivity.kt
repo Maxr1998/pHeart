@@ -149,4 +149,12 @@ class MeasureActivity : AppCompatActivity(), MeasurementCallback, KoinComponent 
 
         startActivity(intent)
     }
+
+    override fun onStop() {
+        super.onStop()
+
+        // Finish activity and abort measurement if the user leaves the activity
+        toast(R.string.toast_warning_measurement_cancelled)
+        finish()
+    }
 }

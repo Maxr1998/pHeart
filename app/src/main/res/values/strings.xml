@@ -23,6 +23,7 @@
     <string name="button_start_measurement">Start</string>
     <string name="button_redo_measurement">Redo</string>
     <string name="button_save_measurement">Save</string>
+    <string name="toast_warning_measurement_cancelled">Measurement was cancelled, please keep the screen open while measuring.</string>
     <string name="statistics_btn_day_">day</string>
     <string name="statistics_btn_week">week</string>
     <string name="statistics_header_daily">Daily statistics</string>
