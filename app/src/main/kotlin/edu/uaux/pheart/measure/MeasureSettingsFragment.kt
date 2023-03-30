@@ -2,6 +2,7 @@ package edu.uaux.pheart.measure
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -90,8 +91,8 @@ class MeasureSettingsFragment : Fragment() {
         }
         startButton.setOnClickListener {
             Intent(requireActivity(), MeasureActivity::class.java).apply {
-                putExtra(MeasureActivity.EXTRA_MEASUREMENT_TYPE, viewModel.measurementType)
-                putExtra(MeasureActivity.EXTRA_ACTIVITY_LEVEL, viewModel.activityLevel)
+                putExtra(MeasureActivity.EXTRA_MEASUREMENT_TYPE, viewModel.measurementType as Parcelable)
+                putExtra(MeasureActivity.EXTRA_ACTIVITY_LEVEL, viewModel.activityLevel as Parcelable)
                 putExtra(MeasureActivity.EXTRA_MEASUREMENT_DURATION, viewModel.measurementDuration)
                 startActivity(this)
             }
