@@ -33,7 +33,6 @@ class MeasureActivity : AppCompatActivity(), FacialHeartRateAnalyzer.Callback {
     private lateinit var activityLevel: ActivityLevel
     private var measurementDuration: Int = DEFAULT_DURATION
     private lateinit var executor: Executor
-    private lateinit var facialHeartRateAnalyzer: FacialHeartRateAnalyzer
     private lateinit var statusText: TextView
     private lateinit var cameraPreview: PreviewView
     private lateinit var overlay: OverlayView
@@ -47,8 +46,6 @@ class MeasureActivity : AppCompatActivity(), FacialHeartRateAnalyzer.Callback {
         measurementDuration = intent.extras?.getInt(EXTRA_MEASUREMENT_DURATION, DEFAULT_DURATION) ?: DEFAULT_DURATION
 
         executor = ContextCompat.getMainExecutor(this)
-        facialHeartRateAnalyzer = FacialHeartRateAnalyzer(executor, this)
-
         statusText = findViewById(R.id.status_text)
         cameraPreview = findViewById(R.id.camera_preview)
         overlay = findViewById(R.id.overlay)
@@ -64,14 +61,27 @@ class MeasureActivity : AppCompatActivity(), FacialHeartRateAnalyzer.Callback {
             val previewUseCase = Preview.Builder().build().apply {
                 setSurfaceProvider(cameraPreview.surfaceProvider)
             }
-            cameraProvider.bindToLifecycle(
-                this,
-                CameraSelector.DEFAULT_FRONT_CAMERA,
-                *when (measurementType) {
-                    MeasurementType.FACE -> arrayOf(previewUseCase, facialHeartRateAnalyzer.useCase)
-                    MeasurementType.FINGER -> arrayOf(previewUseCase)
-                },
-            )
+            when (measurementType) {
+                MeasurementType.FACE -> {
+                    val facialHeartRateAnalyzer = FacialHeartRateAnalyzer(executor, this)
+                    cameraProvider.bindToLifecycle(
+                        this,
+                        CameraSelector.DEFAULT_FRONT_CAMERA,
+                        previewUseCase,
+                        facialHeartRateAnalyzer.useCase,
+                    )
+                }
+                MeasurementType.FINGER -> {
+                    val fingerHeartRateAnalyzer = FingerHeartRateAnalyzer(executor, this)
+                    val camera = cameraProvider.bindToLifecycle(
+                        this,
+                        CameraSelector.DEFAULT_BACK_CAMERA,
+                        previewUseCase,
+                        fingerHeartRateAnalyzer.useCase,
+                    )
+                    camera.cameraControl.enableTorch(true)
+                }
+            }
         }
     }
 
@@ -86,7 +96,7 @@ class MeasureActivity : AppCompatActivity(), FacialHeartRateAnalyzer.Callback {
         statusText.postDelayed(clearTextRunnable, 300)
     }
 
-    override fun onMeasurementTaken(averageLuminance: Float) {
+    override fun onMeasurementTaken(timestamp: Long, averageLuminance: Double) {
         // TODO: Store measurement
     }
 

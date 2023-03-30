@@ -4,7 +4,6 @@ import android.graphics.ImageFormat
 import android.graphics.Matrix
 import android.graphics.PointF
 import android.util.Size
-import android.view.Surface
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
 import androidx.camera.mlkit.vision.MlKitAnalyzer
@@ -24,12 +23,9 @@ class FacialHeartRateAnalyzer(
     private val mlKitAnalyzer = FaceDetectionHelper.buildMlKitAnalyzer(faceDetector, callbackExecutor, this)
     private val backgroundExecutor: Executor = Executors.newSingleThreadExecutor()
 
-    val useCase: ImageAnalysis = ImageAnalysis.Builder()
-        .setTargetRotation(Surface.ROTATION_0)
-        .build()
-        .also { analysis ->
-            analysis.setAnalyzer(backgroundExecutor, this)
-        }
+    val useCase: ImageAnalysis = ImageAnalysis.Builder().build().also { analysis ->
+        analysis.setAnalyzer(backgroundExecutor, this)
+    }
 
     private var lastFaces: List<Face> = emptyList()
 
@@ -74,7 +70,7 @@ class FacialHeartRateAnalyzer(
 
     interface Callback {
         fun onFacesDetected(faces: List<Face>)
-        fun onMeasurementTaken(averageLuminance: Float)
+        fun onMeasurementTaken(timestamp: Long, averageLuminance: Double)
         fun onMeasurementCancelled()
 
         fun onShowPoints(points: List<PointF>, imageWidth: Int, imageHeight: Int) = Unit

@@ -11,7 +11,7 @@ class MeasureSettingsViewModel(app: Application) : AndroidViewModel(app) {
         val DURATIONS = arrayOf(5, 15, DEFAULT_DURATION, 60)
     }
 
-    var measurementType: MeasurementType = MeasurementType.FACE
+    var measurementType: MeasurementType = MeasurementType.FINGER
     var activityLevel: ActivityLevel = ActivityLevel.SEATED
     var measurementDuration: Int = DEFAULT_DURATION
 }
