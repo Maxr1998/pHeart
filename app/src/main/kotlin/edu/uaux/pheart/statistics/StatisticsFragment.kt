@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -127,7 +126,7 @@ class StatisticsFragment : Fragment() {
     }
 
     private fun styleChart() {
-        val fontColor = bpmTextView.currentTextColor
+        val textColor = requireContext().resolveThemeColor(R.attr.colorOnSurface)
 
         // style chart
         barChart.description = null
@@ -141,12 +140,12 @@ class StatisticsFragment : Fragment() {
         barChart.xAxis.valueFormatter = TimeAxisFormatter(timeFormat)
         barChart.xAxis.setDrawGridLines(false)
         barChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
-        barChart.xAxis.textColor = fontColor
+        barChart.xAxis.textColor = textColor
 
         barChart.axisLeft.isEnabled = false
 
         barChart.axisRight.axisMinimum = 0f
-        barChart.axisRight.textColor = fontColor
+        barChart.axisRight.textColor = textColor
     }
 
     private fun updateChartData() {
