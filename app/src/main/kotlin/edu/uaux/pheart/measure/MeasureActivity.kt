@@ -1,12 +1,10 @@
 package edu.uaux.pheart.measure
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.PointF
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.Preview
@@ -23,14 +21,17 @@ import edu.uaux.pheart.util.ext.getParcelableCompat
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import edu.uaux.pheart.util.ext.toast
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.time.ZonedDateTime
 import java.util.concurrent.Executor
 
-class MeasureActivity : AppCompatActivity(), FacialHeartRateAnalyzer.Callback, KoinComponent {
+class MeasureActivity : AppCompatActivity(), MeasurementCallback, KoinComponent {
 
     companion object {
+        const val DEBUG = false
+
         const val EXTRA_MEASUREMENT_TYPE = "edu.uaux.pheart.measure.EXTRA_MEASUREMENT_TYPE"
         const val EXTRA_ACTIVITY_LEVEL = "edu.uaux.pheart.measure.EXTRA_ACTIVITY_LEVEL"
         const val EXTRA_MEASUREMENT_DURATION = "edu.uaux.pheart.measure.EXTRA_MEASUREMENT_DURATION"
@@ -42,10 +43,15 @@ class MeasureActivity : AppCompatActivity(), FacialHeartRateAnalyzer.Callback, K
 
     private val measurementDao: MeasurementDao by inject()
 
+    // Intent extras
     private lateinit var measurementType: MeasurementType
     private lateinit var activityLevel: ActivityLevel
     private var measurementDuration: Int = DEFAULT_DURATION
+
+    // Executor
     private lateinit var executor: Executor
+
+    // Views
     private lateinit var statusText: TextView
     private lateinit var cameraPreview: PreviewView
     private lateinit var overlay: OverlayView
@@ -75,6 +81,7 @@ class MeasureActivity : AppCompatActivity(), FacialHeartRateAnalyzer.Callback, K
 
     private fun startCamera() {
         CameraHelper.withCameraProvider(this, executor) { cameraProvider ->
+            // Unbind previous use-cases
             cameraProvider.unbindAll()
 
             val previewUseCase = Preview.Builder().build().apply {
@@ -104,30 +111,23 @@ class MeasureActivity : AppCompatActivity(), FacialHeartRateAnalyzer.Callback, K
         }
     }
 
-    private val clearTextRunnable = Runnable {
-        statusText.text = null
-    }
-
-    @SuppressLint("SetTextI18n")
-    override fun onFacesDetected(faces: List<Face>) {
-        statusText.text = "${faces.size} faces detected"
-        statusText.removeCallbacks(clearTextRunnable)
-        statusText.postDelayed(clearTextRunnable, 300)
-    }
-
     override fun onMeasurementTaken(timestamp: Long, averageLuminance: Double) {
         // TODO: Store measurement
     }
 
     override fun onShowPoints(points: List<PointF>, imageWidth: Int, imageHeight: Int) {
-        overlay.points = points
-        overlay.imageWidth = imageWidth
-        overlay.imageHeight = imageHeight
+        if (DEBUG) {
+            overlay.points = points
+            overlay.imageWidth = imageWidth
+            overlay.imageHeight = imageHeight
+        }
     }
 
     override fun onMeasurementCancelled() {
-        Toast.makeText(this, "Cancelled", Toast.LENGTH_SHORT).show()
-        overlay.points = emptyList()
+        if (DEBUG) {
+            toast("Cancelled")
+            overlay.points = emptyList()
+        }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {

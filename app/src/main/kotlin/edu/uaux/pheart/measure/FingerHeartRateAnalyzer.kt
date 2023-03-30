@@ -8,7 +8,7 @@ import java.util.concurrent.Executors
 
 class FingerHeartRateAnalyzer(
     private val callbackExecutor: Executor,
-    private val callback: FacialHeartRateAnalyzer.Callback,
+    private val callback: MeasurementCallback,
 ) : ImageAnalysis.Analyzer {
 
     private val backgroundExecutor: Executor = Executors.newSingleThreadExecutor()

@@ -2,7 +2,6 @@ package edu.uaux.pheart.measure
 
 import android.graphics.ImageFormat
 import android.graphics.Matrix
-import android.graphics.PointF
 import android.util.Size
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
@@ -16,7 +15,7 @@ import java.util.concurrent.Executors
 
 class FacialHeartRateAnalyzer(
     private val callbackExecutor: Executor,
-    private val callback: Callback,
+    private val callback: MeasurementCallback,
 ) : ImageAnalysis.Analyzer, Consumer<MlKitAnalyzer.Result> {
 
     private val faceDetector = FaceDetectionHelper.buildFaceDetector()
@@ -28,18 +27,6 @@ class FacialHeartRateAnalyzer(
     }
 
     private var lastFaces: List<Face> = emptyList()
-
-    override fun accept(result: MlKitAnalyzer.Result) {
-        // Log throwable if not-null
-        Timber.e(result.getThrowable(faceDetector))
-
-        // Send results to callback
-        val faces = result.getValue(faceDetector)
-        lastFaces = faces.orEmpty()
-        if (!faces.isNullOrEmpty()) {
-            callback.onFacesDetected(faces)
-        }
-    }
 
     override fun analyze(image: ImageProxy) {
         require(image.format == ImageFormat.YUV_420_888)
@@ -62,17 +49,17 @@ class FacialHeartRateAnalyzer(
         mlKitAnalyzer.analyze(image)
     }
 
+    /**
+     * Process the result of the ML Kit face detector.
+     */
+    override fun accept(result: MlKitAnalyzer.Result) {
+        lastFaces = result.getValue(faceDetector).orEmpty()
+        Timber.e(result.getThrowable(faceDetector)) // no-op if null
+    }
+
     override fun getDefaultTargetResolution(): Size = mlKitAnalyzer.defaultTargetResolution
     override fun getTargetCoordinateSystem(): Int = mlKitAnalyzer.targetCoordinateSystem
     override fun updateTransform(matrix: Matrix?) {
         mlKitAnalyzer.updateTransform(matrix)
-    }
-
-    interface Callback {
-        fun onFacesDetected(faces: List<Face>)
-        fun onMeasurementTaken(timestamp: Long, averageLuminance: Double)
-        fun onMeasurementCancelled()
-
-        fun onShowPoints(points: List<PointF>, imageWidth: Int, imageHeight: Int) = Unit
     }
 }
