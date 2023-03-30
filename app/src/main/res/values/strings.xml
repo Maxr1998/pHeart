@@ -29,10 +29,17 @@
     <string name="statistics_average">Average</string>
     <string name="statistics_minimum">Minimum</string>
     <string name="statistics_maximum">Maximum</string>
+    <string name="bpm_range_template">%d–%d</string>
+    <string name="bpm">BPM</string>
+    <string name="no_value_indicator">––</string>
+
+    <!--  Profile  -->
     <string name="profile_age">Age</string>
-    <string name="profile_weight">Weight</string>
-    <string name="profile_height">Height</string>
-    <string name="profile_info_text_resting_heart_rate">Your resting heart rate should be between 60 and 100 bpm.</string>
-    <string name="profile_info_text_maximum_heart_rate">Your maximum heart rate is approximately 190–200 bpm.</string>
-    <string name="profile_info_text_exercise_heart_rate">Your recommended exercise heart rate is 160–180 bpm.</string>
+    <string name="profile_bio_sex">Biological Sex</string>
+    <string name="option_male">Male</string>
+    <string name="option_female">Female</string>
+    <string name="profile_resting_heart_rate_title">Resting heart rate</string>
+    <string name="profile_resting_heart_rate_info_text">When you are not engaged in any physical activity or stress your heart rate should be around this level, although it can vary depending on factors such as age, fitness level, and overall health. A lower resting heart rate is generally considered a sign of good cardiovascular health and fitness.</string>
+    <string name="profile_exercise_heart_rate_title">Exercise heart rate</string>
+    <string name="profile_exercise_heart_rate_info_text">Exercising within this range can improve your cardiovascular fitness, lower your risk of heart disease, and improve overall health. However, it is important to consult with a healthcare professional before starting any exercise program to ensure it is safe and appropriate for you.</string>
 </resources>

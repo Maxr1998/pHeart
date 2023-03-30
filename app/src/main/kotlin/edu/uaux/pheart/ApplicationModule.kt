@@ -1,6 +1,7 @@
 package edu.uaux.pheart
 
 import android.app.Application
+import android.content.Context
 import androidx.room.Room
 import edu.uaux.pheart.all_results.AllResultsFragment
 import edu.uaux.pheart.database.AppDatabase
@@ -21,5 +22,12 @@ val applicationModule = module {
         Room.databaseBuilder(get<Application>(), AppDatabase::class.java, name = "db")
             .fallbackToDestructiveMigration()
             .build()
+    }
+    single {
+        val context = get<Context>()
+        context.getSharedPreferences(
+            "${context.packageName}_preferences",
+            Context.MODE_PRIVATE,
+        )
     }
 }
