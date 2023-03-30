@@ -34,14 +34,6 @@ class PreferencesViewModel(app: Application) : AndroidViewModel(app) {
             initialSelection = "30m"
             dependency = PreferenceKeys.PREF_KEY_ENABLE_REMINDERS
         }
-
-        switch(PreferenceKeys.PREF_KEY_RESPECT_DO_NOT_DISTURB) {
-            title = "Do not disturb"
-            summary = "Ignore notifications when the phone is in \"do not disturb\" mode."
-            defaultValue = true
-            dependency = PreferenceKeys.PREF_KEY_ENABLE_REMINDERS
-        }
-
     }
     val preferencesAdapter = PreferencesAdapter(preferenceScreen)
 }
