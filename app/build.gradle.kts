@@ -9,6 +9,7 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.detekt)
     alias(libs.plugins.android.junit5)
+    alias(libs.plugins.parcelize)
 }
 
 detekt {
