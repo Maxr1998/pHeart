@@ -42,16 +42,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_group">
 
-        <!--  when setting bpm in code, use stylespan to make "bpm" smaller-->
-        <TextView
-            android:id="@+id/bpm_text"
-            style="@style/TextAppearance.Material3.DisplayLarge"
+        <include
+            android:id="@+id/selected_heart_rate"
+            layout="@layout/display_bpm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="89 bpm" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/time_text"
@@ -60,7 +58,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/bpm_text"
+            app:layout_constraintTop_toBottomOf="@id/selected_heart_rate"
             tools:text="16:00" />
 
         <TextView
@@ -107,6 +105,7 @@
             app:layout_constraintTop_toBottomOf="@id/daily_stats_title">
 
             <TextView
+                android:id="@+id/average_label"
                 style="@style/TextAppearance.Material3.BodyLarge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -115,15 +114,13 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/daily_average_bpm_text"
-                style="@style/TextAppearance.Material3.BodyLarge"
+            <include
+                android:id="@+id/average_bpm_container"
+                layout="@layout/display_bpm_small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="70 bpm" />
+                app:layout_constraintEnd_toEndOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -135,6 +132,7 @@
             app:layout_constraintTop_toBottomOf="@id/daily_average_container">
 
             <TextView
+                android:id="@+id/minimum_label"
                 style="@style/TextAppearance.Material3.BodyLarge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -143,15 +141,13 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/daily_minimum_bpm_text"
-                style="@style/TextAppearance.Material3.BodyLarge"
+            <include
+                android:id="@+id/minimum_bpm_container"
+                layout="@layout/display_bpm_small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="40 bpm" />
+                app:layout_constraintEnd_toEndOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -163,6 +159,7 @@
             app:layout_constraintTop_toBottomOf="@id/daily_minimum_container">
 
             <TextView
+                android:id="@+id/maximum_label"
                 style="@style/TextAppearance.Material3.BodyLarge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -171,15 +168,12 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/daily_maximum_bpm_text"
-                style="@style/TextAppearance.Material3.BodyLarge"
+            <include
+                android:id="@+id/maximum_bpm_container"
+                layout="@layout/display_bpm_small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="140 bpm" />
+                app:layout_constraintEnd_toEndOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

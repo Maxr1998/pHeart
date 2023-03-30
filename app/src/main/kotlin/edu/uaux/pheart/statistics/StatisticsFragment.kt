@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.github.mikephil.charting.charts.BarChart
@@ -49,29 +50,29 @@ class StatisticsFragment : Fragment() {
         viewModel.dailyMeasurements.observe(this) { measurements ->
             updateChartData()
             if (measurements.isEmpty()) {
-                dailyAverageTextView.text = "-- bpm"
-                dailyMinimumTextView.text = "-- bpm"
-                dailyMaximumTextView.text = "-- bpm"
+                dailyAverageTextView.setText(R.string.no_value_indicator)
+                dailyMinimumTextView.setText(R.string.no_value_indicator)
+                dailyMaximumTextView.setText(R.string.no_value_indicator)
                 return@observe
             }
-            dailyAverageTextView.text = "${measurements.avgOf { it.bpm }} bpm"
-            dailyMinimumTextView.text = "${measurements.minOf { it.bpm }} bpm"
-            dailyMaximumTextView.text = "${measurements.maxOf { it.bpm }} bpm"
+            dailyAverageTextView.text = measurements.avgOf { it.bpm }.toString()
+            dailyMinimumTextView.text = measurements.minOf { it.bpm }.toString()
+            dailyMaximumTextView.text = measurements.maxOf { it.bpm }.toString()
         }
 
         viewModel.selectedMeasurement.observe(this) { selected ->
             if (selected == null) {
-                bpmTextView.text = "-- bpm"
-                timeTextView.text = "--:--"
+                bpmTextView.setText(R.string.no_value_indicator)
+                timeTextView.setText(R.string.no_value_indicator)
                 return@observe
             }
-            bpmTextView.text = "${selected.avgBpm} bpm"
+            bpmTextView.text = selected.avgBpm.toString()
             timeTextView.text = selected.timeOfDay.toFormattedString(includeSeconds = false)
         }
 
         viewModel.dayInstant.observe(this) { day ->
             if (day == null) {
-                dateTextView.text = "-"
+                dateTextView.setText(R.string.no_value_indicator)
                 return@observe
             }
             dateTextView.text = day.format(dateFormat)
@@ -91,13 +92,16 @@ class StatisticsFragment : Fragment() {
         dailyStatsButton = view.findViewById(R.id.btn_day)
         weeklyStatsButton = view.findViewById(R.id.btn_week)
 
-        bpmTextView = view.findViewById(R.id.bpm_text)
+        bpmTextView = view.findViewById<ConstraintLayout>(R.id.selected_heart_rate).findViewById(R.id.bpm_text)
         timeTextView = view.findViewById(R.id.time_text)
         dateTextView = view.findViewById(R.id.date_text)
 
-        dailyAverageTextView = view.findViewById(R.id.daily_average_bpm_text)
-        dailyMinimumTextView = view.findViewById(R.id.daily_minimum_bpm_text)
-        dailyMaximumTextView = view.findViewById(R.id.daily_maximum_bpm_text)
+        dailyAverageTextView =
+            view.findViewById<ConstraintLayout>(R.id.average_bpm_container).findViewById(R.id.bpm_text)
+        dailyMinimumTextView =
+            view.findViewById<ConstraintLayout>(R.id.minimum_bpm_container).findViewById(R.id.bpm_text)
+        dailyMaximumTextView =
+            view.findViewById<ConstraintLayout>(R.id.maximum_bpm_container).findViewById(R.id.bpm_text)
 
         buttonGroup.addOnButtonCheckedListener { _, button, isChecked ->
             if (isChecked) {
