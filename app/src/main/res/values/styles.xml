@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="MainTheme" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="android:windowLightStatusBar">@bool/is_dark_icons</item>
+    <style name="BaseTheme" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
+    <style name="MainTheme" parent="BaseTheme">
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="barChartColor">?attr/colorPrimaryContainer</item>
+        <item name="barChartHighlightColor">?attr/colorPrimaryVariant</item>
     </style>
 </resources>

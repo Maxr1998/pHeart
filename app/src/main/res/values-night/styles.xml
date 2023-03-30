@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="MainTheme" parent="BaseTheme">
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="barChartColor">?attr/colorPrimary</item>
+        <item name="barChartHighlightColor">?attr/colorPrimaryContainer</item>
+    </style>
+</resources>

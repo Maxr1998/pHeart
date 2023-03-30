@@ -181,7 +181,7 @@ class StatisticsFragment : Fragment() {
 
     private fun styleDataset(barDataSet: BarDataSet) {
         barDataSet.axisDependency = YAxis.AxisDependency.RIGHT
-        barDataSet.color = requireContext().resolveThemeColor(R.attr.colorPrimary)
-        barDataSet.highLightColor = requireContext().resolveThemeColor(R.attr.colorPrimaryContainer)
+        barDataSet.color = requireContext().resolveThemeColor(R.attr.barChartColor)
+        barDataSet.highLightColor = requireContext().resolveThemeColor(R.attr.barChartHighlightColor)
     }
 }
