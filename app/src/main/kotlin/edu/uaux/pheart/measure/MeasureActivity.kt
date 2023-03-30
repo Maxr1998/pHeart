@@ -12,6 +12,7 @@ import androidx.camera.core.CameraSelector
 import androidx.camera.core.Preview
 import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import com.google.mlkit.vision.face.Face
 import edu.uaux.pheart.R
 import edu.uaux.pheart.database.ActivityLevel
@@ -19,6 +20,9 @@ import edu.uaux.pheart.database.Measurement
 import edu.uaux.pheart.database.MeasurementDao
 import edu.uaux.pheart.measure.MeasureSettingsViewModel.Companion.DEFAULT_DURATION
 import edu.uaux.pheart.util.ext.getParcelableCompat
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.time.ZonedDateTime
@@ -133,7 +137,12 @@ class MeasureActivity : AppCompatActivity(), FacialHeartRateAnalyzer.Callback, K
 
     private fun onSaveMeasurement() {
         val measurement = Measurement(ZonedDateTime.now().plusDays(180), 80, ActivityLevel.LIGHT_EXERCISE)
-        measurementDao.insert(measurement)
+
+        lifecycleScope.launch {
+            withContext(Dispatchers.IO) {
+                measurementDao.insert(measurement)
+            }
+        }
 
         val intent = Intent(this, MeasureResultsActivity::class.java)
         intent.putExtra(MeasureResultsActivity.EXTRA_MEASUREMENT, measurement)

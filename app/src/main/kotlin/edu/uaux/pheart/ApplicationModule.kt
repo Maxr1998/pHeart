@@ -30,4 +30,5 @@ val applicationModule = module {
             Context.MODE_PRIVATE,
         )
     }
+    single { get<AppDatabase>().measurementDao() }
 }
