@@ -19,6 +19,7 @@ import com.github.mikephil.charting.data.BarEntry
 import com.google.android.material.button.MaterialButtonToggleGroup
 import edu.uaux.pheart.R
 import edu.uaux.pheart.util.avgOf
+import edu.uaux.pheart.util.ext.toast
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
@@ -108,11 +109,11 @@ class StatisticsFragment : Fragment() {
                 when (button) {
                     R.id.btn_day -> {
                         viewModel.switchTo(StatisticsFragmentMode.DAILY)
-                        Toast.makeText(context, "daily stats", Toast.LENGTH_SHORT).show()
+                        requireActivity().toast("daily stats")
                     }
                     R.id.btn_week -> {
                         viewModel.switchTo(StatisticsFragmentMode.WEEKLY)
-                        Toast.makeText(context, "weekly stats", Toast.LENGTH_SHORT).show()
+                        requireActivity().toast("weekly stats")
                     }
                 }
             }
