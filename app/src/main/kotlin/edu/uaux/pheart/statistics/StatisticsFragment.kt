@@ -46,7 +46,6 @@ class StatisticsFragment : Fragment() {
     private lateinit var previousDayButton: Button
     private lateinit var nextDayButton: Button
 
-
     private val timeFormat = DateTimeFormatter.ofPattern("HH:mm", Locale.getDefault())
     private val dateFormat = DateTimeFormatter.ofPattern("dd. MMMM", Locale.getDefault())
 
@@ -85,10 +84,8 @@ class StatisticsFragment : Fragment() {
             }
             dateTextView.text = day.format(dateFormat)
 
-            val startOfToday = ZonedDateTime.now(ZoneId.systemDefault()).run {
-                ZonedDateTime.of(year, monthValue, dayOfMonth, 0, 0, 0, 0, ZoneId.systemDefault())
-            }
-            nextDayButton.isEnabled = day.isBefore(startOfToday)
+            val now = ZonedDateTime.now(ZoneId.systemDefault())
+            nextDayButton.isEnabled = day.isBefore(now.startOfDay())
             previousDayButton.isEnabled = true
         }
     }
