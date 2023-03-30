@@ -123,7 +123,7 @@ androidx-test-espresso = { module = "androidx.test.espresso:espresso-core", vers
 detekt-formatting = { group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version.ref = "detekt" }
 
 [bundles]
-kotlinx-coroutines = ["kotlinx-coroutines-core", "kotlinx-coroutines-android"]
+kotlinx-coroutines = ["kotlinx-coroutines-core", "kotlinx-coroutines-android", "kotlinx-coroutines-guava"]
 androidx-lifecycle = ["androidx-lifecycle-viewmodel", "androidx-lifecycle-livedata", "androidx-lifecycle-runtime", "androidx-lifecycle-common"]
 androidx-room = ["androidx-room-runtime", "androidx-room-ktx"]
 kotest = ["kotest-runner", "kotest-assertions", "kotest-property"]
