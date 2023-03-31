@@ -79,7 +79,7 @@ class MeasureActivity : AppCompatActivity(), MeasureCallback, KoinComponent {
 
         // Read intent extras
         measurementType = intent.extras?.getParcelableCompat(EXTRA_MEASUREMENT_TYPE) ?: MeasurementType.FACE
-        activityLevel = intent.extras?.getParcelableCompat(EXTRA_ACTIVITY_LEVEL) ?: ActivityLevel.RELAXED
+        activityLevel = intent.extras?.getParcelableCompat(EXTRA_ACTIVITY_LEVEL) ?: ActivityLevel.RELAXING
         measureDuration = intent.extras?.getInt(EXTRA_MEASURE_DURATION, DEFAULT_DURATION) ?: DEFAULT_DURATION
 
         executor = ContextCompat.getMainExecutor(this)
@@ -227,7 +227,7 @@ class MeasureActivity : AppCompatActivity(), MeasureCallback, KoinComponent {
     private fun onSaveMeasurement() {
         lifecycleScope.launch {
             // TODO: replace stub measurement with real one
-            val measurement = Measurement(ZonedDateTime.now().plusDays(180), 80, ActivityLevel.LIGHT_EXERCISE)
+            val measurement = Measurement(ZonedDateTime.now().plusDays(180), 80, ActivityLevel.EXERCISING)
 
             withContext(Dispatchers.IO) {
                 measurementDao.insert(measurement)

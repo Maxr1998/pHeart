@@ -14,10 +14,8 @@
     <string name="measurement_type_description_face">Keep your face in frame until the measurement is complete.</string>
     <string name="measurement_type_description_finger">Put your finger on your back camera lens and flashlight.\n(Use \'face\' if the camera and flashlight are too far apart.)</string>
     <string name="activity_level_prompt">How did you spend the last hour?</string>
-    <string name="activity_level_relaxed">relax</string>
-    <string name="activity_level_seated">sit</string>
-    <string name="activity_level_light_exercise">light exercise</string>
-    <string name="activity_level_heavy_exercise">heavy exercise</string>
+    <string name="activity_level_relaxing">relaxing</string>
+    <string name="activity_level_exercising">exercising</string>
     <string name="measurement_duration_prompt">How long do you want to measure?</string>
     <string name="measurement_duration_prompt_subtitle">Longer measurements are more precise.</string>
     <string name="button_start_measurement">Start</string>
@@ -47,4 +45,5 @@
     <string name="compare_last_week_average">compared to last 7 days</string>
     <string name="compare_yesterday_average">compared to yesterday\'s average</string>
     <string name="compare_to_average_no_value">N/A</string>
+    <string name="screen_name_statistics">Statistics</string>
 </resources>

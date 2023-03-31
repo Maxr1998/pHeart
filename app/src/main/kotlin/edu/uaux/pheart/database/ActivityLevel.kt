@@ -5,9 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 enum class ActivityLevel : Parcelable {
-    RELAXED,
-    SEATED,
-    LIGHT_EXERCISE,
-    HEAVY_EXERCISE,
+    RELAXING,
+    EXERCISING,
     ;
 }

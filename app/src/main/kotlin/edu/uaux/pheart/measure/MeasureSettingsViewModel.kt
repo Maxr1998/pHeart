@@ -12,6 +12,6 @@ class MeasureSettingsViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     var measurementType: MeasurementType = MeasurementType.FINGER
-    var activityLevel: ActivityLevel = ActivityLevel.SEATED
+    var activityLevel: ActivityLevel = ActivityLevel.RELAXING
     var measurementDuration: Int = DEFAULT_DURATION
 }

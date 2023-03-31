@@ -57,19 +57,15 @@ class MeasureSettingsFragment : Fragment() {
         updateMeasurementDescription()
         activityLevelButtonGroup.check(
             when (viewModel.activityLevel) {
-                ActivityLevel.RELAXED -> R.id.button_activity_level_relaxed
-                ActivityLevel.SEATED -> R.id.button_activity_level_seated
-                ActivityLevel.LIGHT_EXERCISE -> R.id.button_activity_level_light_exercise
-                ActivityLevel.HEAVY_EXERCISE -> R.id.button_activity_level_heavy_exercise
+                ActivityLevel.RELAXING -> R.id.button_activity_level_relaxing
+                ActivityLevel.EXERCISING -> R.id.button_activity_level_exercising
             },
         )
         activityLevelButtonGroup.addOnButtonCheckedListener { _, checkedId, isChecked ->
             if (isChecked) {
                 viewModel.activityLevel = when (checkedId) {
-                    R.id.button_activity_level_relaxed -> ActivityLevel.RELAXED
-                    R.id.button_activity_level_seated -> ActivityLevel.SEATED
-                    R.id.button_activity_level_light_exercise -> ActivityLevel.LIGHT_EXERCISE
-                    R.id.button_activity_level_heavy_exercise -> ActivityLevel.HEAVY_EXERCISE
+                    R.id.button_activity_level_relaxing -> ActivityLevel.RELAXING
+                    R.id.button_activity_level_exercising -> ActivityLevel.EXERCISING
                     else -> error("Illegal button clicked")
                 }
             }

@@ -25,12 +25,10 @@ object MeasurementDummyRepository {
     }
 
     private fun randomBpm() = Random.nextInt(35, 125)
-    private fun randomActivityLevel() = when (Random.nextInt(0, 4)) {
-        0 -> ActivityLevel.RELAXED
-        1 -> ActivityLevel.SEATED
-        2 -> ActivityLevel.LIGHT_EXERCISE
-        3 -> ActivityLevel.HEAVY_EXERCISE
-        else -> ActivityLevel.RELAXED
+    private fun randomActivityLevel() = when (Random.nextInt(0, 2)) {
+        0 -> ActivityLevel.RELAXING
+        1 -> ActivityLevel.EXERCISING
+        else -> ActivityLevel.RELAXING
     }
 
     private fun ZonedDateTime.scattered(minutes: Int): ZonedDateTime {
