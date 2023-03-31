@@ -11,12 +11,11 @@ import android.view.View
 import edu.uaux.pheart.R
 
 class HeartRangeView : View {
-
     private var _lowerBound: Int = 0
     private var _upperBound: Int = 0
     private var _currentValue: Int = 0
-    private var _greenStart: Int = 0
-    private var _greenEnd: Int = 0
+    private var _goodStart: Int = 0
+    private var _goodEnd: Int = 0
     private var _markerWidth: Float = 0f
 
     private lateinit var leftBoundsTextPaint: TextPaint
@@ -37,12 +36,67 @@ class HeartRangeView : View {
         strokeWidth = resources.displayMetrics.density * 5
     }
 
-    val lowerBound get() = _lowerBound
-    val upperBound get() = _upperBound
-    val currentValue get() = _currentValue
-    val greenStart get() = _greenStart
-    val greenEnd get() = _greenEnd
-    val markerWidth get() = _markerWidth
+    var lowerBound get() = _lowerBound
+        set(value) {
+        _lowerBound = value
+        invalidate()
+    }
+    var upperBound get() = _upperBound
+        set(value) {
+        _upperBound = value
+        invalidate()
+    }
+    var currentValue get() = _currentValue
+        set(value) {
+        _currentValue = value
+        invalidate()
+    }
+    var goodStart get() = _goodStart
+        set(value) {
+        _goodStart = value
+        invalidate()
+    }
+    var goodEnd get() = _goodEnd
+        set(value) {
+        _goodEnd = value
+        invalidate()
+    }
+    var markerWidth get() = _markerWidth
+        set(value) {
+        _markerWidth = value
+        invalidate()
+    }
+    var warningPaintColor get() = warningPaint.color
+        set(value) {
+        warningPaint.color = value
+        invalidate()
+    }
+    var goodPaintColor get() = goodPaint.color
+        set(value) {
+        goodPaint.color = value
+        invalidate()
+    }
+
+    var markerPaintColor get() = markerPaint.color
+        set(value) {
+        markerPaint.color = value
+        invalidate()
+    }
+
+    var markerTextWidth get() = markerTextPaint.measureText(currentValue.toString())
+        set(value) {
+        markerTextPaint.textSize = value
+        invalidate()
+    }
+
+    var legendColor: Int = Color.BLACK
+        set(value) {
+        field = value
+        leftBoundsTextPaint.color = value
+        centeredBoundsTextPaint.color = value
+        rightBoundsTextPaint.color = value
+        invalidate()
+    }
 
 
     /**
@@ -74,39 +128,46 @@ class HeartRangeView : View {
 
         _lowerBound = a.getInteger(R.styleable.HeartRangeView_lowerBound, 0)
         _upperBound = a.getInteger(R.styleable.HeartRangeView_upperBound, 100)
-        _greenStart = a.getInteger(R.styleable.HeartRangeView_greenStart, 60)
-        _greenEnd = a.getInteger(R.styleable.HeartRangeView_greenEnd, 80)
+        _goodStart = a.getInteger(R.styleable.HeartRangeView_goodStart, 60)
+        _goodEnd = a.getInteger(R.styleable.HeartRangeView_goodEnd, 80)
         _currentValue = a.getInteger(R.styleable.HeartRangeView_currentValue, 70)
 
         warningPaint.color = a.getColor(R.styleable.HeartRangeView_warningColor, Color.YELLOW)
         goodPaint.color = a.getColor(R.styleable.HeartRangeView_goodColor, Color.GREEN)
         _markerWidth = a.getDimension(R.styleable.HeartRangeView_markerWidth, resources.displayMetrics.density * 5)
+        markerPaint.color = a.getColor(R.styleable.HeartRangeView_markerColor, Color.GRAY)
+
+        val legendColor = a.getColor(R.styleable.HeartRangeView_legendColor, Color.BLACK)
+        val legendTextSize = a.getDimension(R.styleable.HeartRangeView_legendTextSize, resources.displayMetrics.density * 16)
 
         a.recycle()
 
-        // Set up a default TextPaint object
         leftBoundsTextPaint = TextPaint().apply {
             flags = Paint.ANTI_ALIAS_FLAG
             textAlign = Paint.Align.LEFT
-            textSize = 40f
+            textSize = legendTextSize
+            color = legendColor
         }
 
         centeredBoundsTextPaint = TextPaint().apply {
             flags = Paint.ANTI_ALIAS_FLAG
             textAlign = Paint.Align.CENTER
-            textSize = 40f
+            textSize = legendTextSize
+            color = legendColor
         }
 
         rightBoundsTextPaint = TextPaint().apply {
             flags = Paint.ANTI_ALIAS_FLAG
             textAlign = Paint.Align.RIGHT
-            textSize = 40f
+            textSize = legendTextSize
+            color = legendColor
         }
 
         markerTextPaint = TextPaint().apply {
             flags = Paint.ANTI_ALIAS_FLAG
             textAlign = Paint.Align.CENTER
-            textSize = 40f
+            textSize = legendTextSize
+            color = legendColor
         }
     }
 
@@ -123,8 +184,8 @@ class HeartRangeView : View {
 
         val valueRange = upperBound - lowerBound
 
-        val greenStartPercent = (greenStart - lowerBound) / valueRange.toFloat()
-        val greenEndPercent = (greenEnd - lowerBound) / valueRange.toFloat()
+        val greenStartPercent = (goodStart - lowerBound) / valueRange.toFloat()
+        val greenEndPercent = (goodEnd - lowerBound) / valueRange.toFloat()
 
         val currentValuePercent = (currentValue - lowerBound) / valueRange.toFloat()
 
@@ -152,49 +213,44 @@ class HeartRangeView : View {
             contentHeight.toFloat() * 0.2f,
             contentWidth.toFloat() * currentValuePercent + markerWidth / 2,
             contentHeight.toFloat() * 0.8f,
-            16f,
-            16f,
+            32f,
+            32f,
             markerPaint,
         )
 
         canvas.drawText(
             lowerBound.toString(),
             paddingLeft.toFloat(),
-            contentHeight.toFloat() * 0.80f,
+            contentHeight.toFloat() * 0.9f,
             leftBoundsTextPaint
         )
 
         canvas.drawText(
-            greenStart.toString(),
+            goodStart.toString(),
             contentWidth.toFloat() * greenStartPercent,
-            contentHeight.toFloat() * 0.825f,
+            contentHeight.toFloat() * 0.9f,
             centeredBoundsTextPaint
         )
 
         canvas.drawText(
-            greenEnd.toString(),
+            goodEnd.toString(),
             contentWidth.toFloat() * greenEndPercent,
-            contentHeight.toFloat() * 0.825f,
+            contentHeight.toFloat() * 0.9f,
             centeredBoundsTextPaint
         )
 
         canvas.drawText(
             upperBound.toString(),
             contentWidth.toFloat(),
-            contentHeight.toFloat() * 0.825f,
+            contentHeight.toFloat() * 0.9f,
             rightBoundsTextPaint
         )
 
         canvas.drawText(
             currentValue.toString(),
             contentWidth.toFloat() * currentValuePercent,
-            contentHeight.toFloat() * 1f,
+            contentHeight.toFloat() * 0.15f,
             centeredBoundsTextPaint
         )
-
-
-
-
-
     }
 }

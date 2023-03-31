@@ -1,12 +1,16 @@
 package edu.uaux.pheart.measure
 
 import android.app.Application
+import android.content.SharedPreferences
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import edu.uaux.pheart.database.Measurement
 import edu.uaux.pheart.util.ext.toast
 import edu.uaux.pheart.database.MeasurementDao
+import edu.uaux.pheart.preferences.PreferenceKeys
+import edu.uaux.pheart.profile.BiologicalSex
+import edu.uaux.pheart.profile.HeartRateInfo
 import edu.uaux.pheart.statistics.StatisticsUtils
 import edu.uaux.pheart.statistics.get
 import edu.uaux.pheart.util.avgOfOrNull
@@ -21,9 +25,13 @@ class MeasureResultsViewModel(app: Application) : AndroidViewModel(app), KoinCom
     private val _comparedToLast7Days = MutableLiveData<Int?>()
     val comparedToLast7Days: LiveData<Int?> = _comparedToLast7Days
 
+    private val _bpmGoodRange = MutableLiveData<IntRange>()
+    val bpmGoodRange: LiveData<IntRange> = _bpmGoodRange
+
     private var initialized = false
 
     private val measurementDao: MeasurementDao by inject()
+    private val sharedPreferences: SharedPreferences by inject()
 
     suspend fun readMeasurementResults(measurement: Measurement) {
         if (initialized) {
@@ -33,6 +41,14 @@ class MeasureResultsViewModel(app: Application) : AndroidViewModel(app), KoinCom
 
         _comparedToYesterday.value = getYesterdayAverage()?.let{ avg -> measurement.bpm - avg}
         _comparedToLast7Days.value = getLast7DaysAverage()?.let{ avg -> measurement.bpm - avg}
+
+        val age = sharedPreferences.getInt(PreferenceKeys.PREF_KEY_AGE, 30)
+        val sex = BiologicalSex.fromId(sharedPreferences.getInt(
+            PreferenceKeys.PREF_KEY_SEX,
+            PreferenceKeys.PREF_SEX_DEFAULT_VALUE
+        ))
+
+        _bpmGoodRange.value = HeartRateInfo.getRestingHeartRate(age, sex)
 
         initialized = true
     }
