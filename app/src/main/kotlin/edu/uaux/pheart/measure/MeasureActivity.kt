@@ -3,9 +3,12 @@ package edu.uaux.pheart.measure
 import android.content.Intent
 import android.graphics.PointF
 import android.os.Bundle
+import android.util.Size
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
@@ -15,6 +18,7 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.google.common.math.DoubleMath.log2
 import edu.uaux.pheart.R
 import edu.uaux.pheart.database.ActivityLevel
 import edu.uaux.pheart.database.Measurement
@@ -22,17 +26,23 @@ import edu.uaux.pheart.database.MeasurementDao
 import edu.uaux.pheart.measure.MeasureSettingsViewModel.Companion.DEFAULT_DURATION
 import edu.uaux.pheart.util.ext.getParcelableCompat
 import edu.uaux.pheart.util.ext.toast
+import edu.uaux.pheart.util.fftFreq
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.guava.await
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.jtransforms.fft.DoubleFFT_1D
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.time.ZonedDateTime
 import java.util.concurrent.Executor
+import kotlin.math.abs
+import kotlin.math.floor
+import kotlin.time.Duration.Companion.nanoseconds
 import kotlin.time.Duration.Companion.seconds
+import kotlin.time.DurationUnit
 
 class MeasureActivity : AppCompatActivity(), MeasureCallback, KoinComponent {
 
@@ -60,9 +70,12 @@ class MeasureActivity : AppCompatActivity(), MeasureCallback, KoinComponent {
     private lateinit var executor: Executor
 
     // Views
-    private lateinit var statusText: TextView
+    private lateinit var toolbar: Toolbar
+    private lateinit var timerText: TextView
     private lateinit var cameraPreview: PreviewView
     private lateinit var overlay: OverlayView
+    private lateinit var heartRateContainer: ViewGroup
+    private lateinit var heartRateText: TextView
     private lateinit var abortButton: Button
     private lateinit var redoButton: Button
     private lateinit var saveButton: Button
@@ -73,6 +86,7 @@ class MeasureActivity : AppCompatActivity(), MeasureCallback, KoinComponent {
     // State
     private val measureState = MutableStateFlow(MeasureState.NONE)
     private val luminanceMeasurements: MutableList<LuminanceMeasurement> = mutableListOf()
+    private var lastHeartRate: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,11 +98,16 @@ class MeasureActivity : AppCompatActivity(), MeasureCallback, KoinComponent {
         measureDuration = intent.extras?.getInt(EXTRA_MEASURE_DURATION, DEFAULT_DURATION) ?: DEFAULT_DURATION
 
         executor = ContextCompat.getMainExecutor(this)
-        statusText = findViewById(R.id.status_text)
+        toolbar = findViewById(R.id.toolbar)
+        timerText = findViewById(R.id.timer_text)
         cameraPreview = findViewById(R.id.camera_preview)
         overlay = findViewById(R.id.overlay)
+        heartRateContainer = findViewById(R.id.bpm_container)
+        heartRateText = heartRateContainer.findViewById(R.id.bpm_text)
 
-        previewUseCase = Preview.Builder().build().apply {
+        previewUseCase = Preview.Builder().apply {
+            setTargetResolution(Size(480, 640))
+        }.build().apply {
             setSurfaceProvider(cameraPreview.surfaceProvider)
         }
 
@@ -118,21 +137,26 @@ class MeasureActivity : AppCompatActivity(), MeasureCallback, KoinComponent {
                     when (state) {
                         MeasureState.NONE -> permissionHelper.requireCameraPermission()
                         MeasureState.IDLE -> launch {
+                            toolbar.setTitle(R.string.measurement_state_get_ready)
+                            heartRateContainer.isVisible = false
                             cameraPreview.isVisible = true
                             startPreview()
-                            showCountdown(5)
+                            showTimer(5)
                             measureState.emit(MeasureState.MEASURING)
                         }
                         MeasureState.MEASURING -> launch {
+                            toolbar.setTitle(R.string.measurement_state_measuring)
                             startMeasurement()
-                            showCountdown(measureDuration)
+                            showTimer(measureDuration)
                             measureState.emit(MeasureState.FINISHED)
                         }
                         MeasureState.FINISHED -> launch {
-                            statusText.text = null
+                            toolbar.setTitle(R.string.measurement_state_complete)
                             cameraPreview.isVisible = false
                             stopCamera()
-                            computeResults()
+                            lastHeartRate = computeHeartRate()
+                            heartRateText.text = lastHeartRate.toString()
+                            heartRateContainer.isVisible = true
                         }
                         MeasureState.ABORTED -> launch {
                             stopCamera()
@@ -144,11 +168,13 @@ class MeasureActivity : AppCompatActivity(), MeasureCallback, KoinComponent {
         }
     }
 
-    private suspend fun showCountdown(seconds: Int) {
+    private suspend fun showTimer(seconds: Int) {
+        timerText.isVisible = true
         for (i in seconds downTo 1) {
-            statusText.text = "$i"
+            timerText.text = "$i"
             delay(1.seconds)
         }
+        timerText.isVisible = false
     }
 
     private fun updateButtonState(state: MeasureState) {
@@ -206,9 +232,38 @@ class MeasureActivity : AppCompatActivity(), MeasureCallback, KoinComponent {
         cameraProvider.unbindAll()
     }
 
-    private fun computeResults() {
-        val measurements = luminanceMeasurements
-        // TODO: compute heart rate from measurements
+    private fun computeHeartRate(): Int {
+        val nearestPowerOfTwo = 2 shl (floor(log2(luminanceMeasurements.size.toDouble())).toInt() - 1)
+        val analyzedMeasurements = luminanceMeasurements.take(nearestPowerOfTwo)
+        val fft = DoubleFFT_1D(nearestPowerOfTwo.toLong())
+
+        // Calculate the time deltas between the measurements
+        val timeDeltas = analyzedMeasurements.mapIndexed { index, measurement ->
+            if (index == 0) 0 else measurement.timestamp - analyzedMeasurements[index - 1].timestamp
+        }.drop(1)
+        val medianTimeDelta = timeDeltas.sorted()[timeDeltas.size / 2]
+
+        // Calculate the FFT of the luminance measurements
+        val fftData = analyzedMeasurements.map(LuminanceMeasurement::averageLuminance).toDoubleArray()
+        fft.realForward(fftData) // output will be stored in fftData
+
+        // We only care about the magnitude of the imaginary parts
+        for (i in fftData.indices) {
+            fftData[i] = abs(fftData[i])
+        }
+        val frequencies = fftFreq(fftData.size, medianTimeDelta.nanoseconds.toDouble(DurationUnit.SECONDS))
+
+        // We only care about frequencies between 1.0 and 3.0 Hz, which are natural heart rates
+        val minFreqIndex = frequencies.indexOfFirst { f -> f > 1.0 }
+        val maxFreqIndex = frequencies.indexOfFirst { f -> f > 3.0 }
+
+        val mostCommonFrequencyIndex = fftData.withIndex()
+            .filter { e -> e.index in minFreqIndex until maxFreqIndex }
+            .maxBy { e -> e.value }
+            .index
+
+        // Convert Hz to bpm
+        return (frequencies[mostCommonFrequencyIndex] * 60.0).toInt()
     }
 
     override fun onLuminanceMeasured(value: LuminanceMeasurement) {
@@ -237,8 +292,7 @@ class MeasureActivity : AppCompatActivity(), MeasureCallback, KoinComponent {
 
     private fun onSaveMeasurement() {
         lifecycleScope.launch {
-            // TODO: replace stub measurement with real one
-            val measurement = Measurement(ZonedDateTime.now().plusDays(180), 80, ActivityLevel.EXERCISING)
+            val measurement = Measurement(ZonedDateTime.now(), lastHeartRate, activityLevel)
 
             withContext(Dispatchers.IO) {
                 measurementDao.insert(measurement)

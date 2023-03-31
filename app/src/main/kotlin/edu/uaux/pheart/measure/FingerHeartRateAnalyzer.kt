@@ -1,6 +1,7 @@
 package edu.uaux.pheart.measure
 
 import android.graphics.ImageFormat
+import android.util.Size
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
 import java.util.concurrent.Executor
@@ -13,7 +14,9 @@ class FingerHeartRateAnalyzer(
 
     private val backgroundExecutor: Executor = Executors.newSingleThreadExecutor()
 
-    val useCase: ImageAnalysis = ImageAnalysis.Builder().build().also { analysis ->
+    val useCase: ImageAnalysis = ImageAnalysis.Builder().apply {
+        setTargetResolution(Size(480, 640))
+    }.build().also { analysis ->
         analysis.setAnalyzer(backgroundExecutor, this)
     }
 

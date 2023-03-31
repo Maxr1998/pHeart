@@ -22,7 +22,9 @@ class FacialHeartRateAnalyzer(
     private val mlKitAnalyzer = FaceDetectionHelper.buildMlKitAnalyzer(faceDetector, callbackExecutor, this)
     private val backgroundExecutor: Executor = Executors.newSingleThreadExecutor()
 
-    val useCase: ImageAnalysis = ImageAnalysis.Builder().build().also { analysis ->
+    val useCase: ImageAnalysis = ImageAnalysis.Builder().apply {
+        setTargetResolution(Size(480, 640))
+    }.build().also { analysis ->
         analysis.setAnalyzer(backgroundExecutor, this)
     }
 

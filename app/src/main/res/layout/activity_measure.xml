@@ -4,17 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/screen_title"
-        style="@style/TextAppearance.Material3.ActionBar.Title"
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:padding="16dp"
-        android:text="@string/title_new_measurement"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/title_new_measurement"
+        app:titleCentered="true" />
 
     <TextView
-        android:id="@+id/status_text"
+        android:id="@+id/timer_text"
         style="@style/TextAppearance.Material3.DisplayLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -22,7 +21,7 @@
         app:layout_constraintBottom_toTopOf="@id/camera_preview"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/screen_title" />
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
     <androidx.camera.view.PreviewView
         android:id="@+id/camera_preview"
@@ -45,12 +44,23 @@
         app:layout_constraintStart_toStartOf="@id/camera_preview"
         app:layout_constraintTop_toTopOf="@id/camera_preview" />
 
+    <include
+        android:id="@+id/bpm_container"
+        layout="@layout/display_bpm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/button_barrier"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/button_barrier"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:barrierDirection="top"
-        app:constraint_referenced_ids="button_redo_measurement,button_save_measurement" />
+        app:constraint_referenced_ids="button_abort_measurement,button_redo_measurement,button_save_measurement" />
 
     <Button
         android:id="@+id/button_abort_measurement"

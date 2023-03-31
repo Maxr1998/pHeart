@@ -28,6 +28,7 @@ modernandroidpreferences = "2.3.2"
 androidx-camera = "1.2.2"
 androidx-camera-mlkit = "1.2.0-beta02"
 playservices-mlkit = "17.1.0"
+jtransforms = "3.1"
 
 # Lifecycle Extensions
 androidx-lifecycle = "2.5.1"
@@ -81,6 +82,7 @@ androidx-camera-lifecycle = { group = "androidx.camera", name = "camera-lifecycl
 androidx-camera-view = { group = "androidx.camera", name = "camera-view", version.ref = "androidx-camera" }
 androidx-camera-mlkit = { group = "androidx.camera", name = "camera-mlkit-vision", version.ref = "androidx-camera-mlkit" }
 playservices-mlkit = { group = "com.google.android.gms", name = "play-services-mlkit-face-detection", version.ref = "playservices-mlkit" }
+jtransforms = { group = "com.github.wendykierp", name = "JTransforms", version.ref = "jtransforms" }
 
 # Lifecycle Extensions
 androidx-lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "androidx-lifecycle" }

@@ -109,6 +109,7 @@ dependencies {
     implementation(libs.androidx.camera.view)
     implementation(libs.androidx.camera.mlkit)
     implementation(libs.playservices.mlkit)
+    implementation(libs.jtransforms)
 
     // Lifecycle & ViewModel
     implementation(libs.bundles.androidx.lifecycle)
