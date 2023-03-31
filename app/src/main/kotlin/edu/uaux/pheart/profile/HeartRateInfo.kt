@@ -1,6 +1,6 @@
 package edu.uaux.pheart.profile
 
-import kotlin.math.max
+import kotlin.math.min
 import kotlin.math.roundToInt
 
 /**
@@ -25,7 +25,7 @@ object HeartRateInfo {
 
     fun getMaxHeartRate(age: Int, biologicalSex: BiologicalSex): Int {
         require(age in 0..Int.MAX_VALUE)
-        return 220 - max(age, 150) + when (biologicalSex) {
+        return 220 - min(age, 150) + when (biologicalSex) {
             BiologicalSex.NONE -> 0
             BiologicalSex.MALE -> 0
             BiologicalSex.FEMALE -> 7 // female heart rate higher by 7 on average
