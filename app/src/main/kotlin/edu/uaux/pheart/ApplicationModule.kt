@@ -9,6 +9,7 @@ import edu.uaux.pheart.measure.MeasureSettingsFragment
 import edu.uaux.pheart.preferences.PreferencesFragment
 import edu.uaux.pheart.profile.ProfileFragment
 import edu.uaux.pheart.statistics.StatisticsFragment
+import edu.uaux.pheart.util.NotificationService
 import org.koin.androidx.fragment.dsl.fragment
 import org.koin.dsl.module
 
@@ -31,4 +32,5 @@ val applicationModule = module {
         )
     }
     single { get<AppDatabase>().measurementDao() }
+    single { NotificationService(get()) }
 }

@@ -15,18 +15,27 @@ import edu.uaux.pheart.measure.MeasureSettingsFragment
 import edu.uaux.pheart.preferences.PreferencesFragment
 import edu.uaux.pheart.profile.ProfileFragment
 import edu.uaux.pheart.statistics.StatisticsFragment
+import edu.uaux.pheart.util.NotificationService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.android.ext.android.get
+import org.koin.core.component.KoinComponent
 
-class MainActivity : AppCompatActivity(), OnItemSelectedListener {
+class MainActivity : AppCompatActivity(), OnItemSelectedListener, KoinComponent {
+
+    companion object {
+        const val EXTRA_START_FRAGMENT = "edu.uaux.pheart.measure.EXTRA_SHOW_FRAGMENT"
+    }
 
     private lateinit var navigationView: BottomNavigationView
+    private val notificationService: NotificationService = get()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        notificationService.createNotificationChannel()
 
         lifecycleScope.launch {
             withContext(Dispatchers.IO) {
@@ -38,7 +47,12 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
         navigationView.setOnItemSelectedListener(this)
 
         if (savedInstanceState == null) {
-            replaceFragment<StatisticsFragment>()
+            val fragmentToStart = intent.extras?.getInt(EXTRA_START_FRAGMENT, 0) ?: 0
+            if (fragmentToStart != 0) {
+                navigationView.selectedItemId = fragmentToStart
+            } else {
+                replaceFragment<StatisticsFragment>()
+            }
         }
     }
 

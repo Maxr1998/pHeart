@@ -53,4 +53,7 @@
     <string name="notification_enable_title">Send reminders</string>
     <string name="notification_enable_desc">Get a reminder to measure your heart rate in regular intervals.</string>
     <string name="notification_reminder_interval_title">Reminder Interval</string>
+
+    <!--  Notifications  -->
+    <string name="notification_debug_title">Time for a measurement!</string>
 </resources>

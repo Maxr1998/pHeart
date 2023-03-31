@@ -1,7 +1,6 @@
 package edu.uaux.pheart.preferences
 
 import android.app.Application
-import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import de.Maxr1998.modernpreferences.PreferencesAdapter
 import de.Maxr1998.modernpreferences.helpers.onClick
@@ -11,8 +10,13 @@ import de.Maxr1998.modernpreferences.helpers.singleChoice
 import de.Maxr1998.modernpreferences.helpers.switch
 import de.Maxr1998.modernpreferences.preferences.choice.SelectionItem
 import edu.uaux.pheart.R
+import edu.uaux.pheart.util.NotificationService
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class PreferencesViewModel(app: Application) : AndroidViewModel(app) {
+class PreferencesViewModel(app: Application) : AndroidViewModel(app), KoinComponent {
+
+    private val notificationService: NotificationService by inject()
     private val preferenceScreen = screen(getApplication()) {
         collapseIcon = true
 
@@ -42,8 +46,7 @@ class PreferencesViewModel(app: Application) : AndroidViewModel(app) {
         pref(PreferenceKeys.PREF_KEY_SEND_MANUAL_NOTIFICATION) {
             titleRes = R.string.notification_send_debug_title
             onClick {
-                Toast.makeText(this@PreferencesViewModel.getApplication(), "Notification sent", Toast.LENGTH_SHORT)
-                    .show()
+                notificationService.sendMeasurementReminder()
                 false
             }
         }
