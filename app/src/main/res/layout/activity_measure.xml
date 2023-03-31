@@ -53,14 +53,26 @@
         app:constraint_referenced_ids="button_redo_measurement,button_save_measurement" />
 
     <Button
-        android:id="@+id/button_redo_measurement"
+        android:id="@+id/button_abort_measurement"
         style="@style/Widget.Material3.Button.OutlinedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/screen_padding_horizontal"
         android:layout_marginBottom="@dimen/screen_padding_vertical"
         android:enabled="false"
+        android:text="@string/button_abort_measurement"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button_redo_measurement"
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/screen_padding_horizontal"
+        android:layout_marginBottom="@dimen/screen_padding_vertical"
         android:text="@string/button_redo_measurement"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

@@ -63,6 +63,7 @@ class MeasureActivity : AppCompatActivity(), MeasureCallback, KoinComponent {
     private lateinit var statusText: TextView
     private lateinit var cameraPreview: PreviewView
     private lateinit var overlay: OverlayView
+    private lateinit var abortButton: Button
     private lateinit var redoButton: Button
     private lateinit var saveButton: Button
 
@@ -91,6 +92,11 @@ class MeasureActivity : AppCompatActivity(), MeasureCallback, KoinComponent {
             setSurfaceProvider(cameraPreview.surfaceProvider)
         }
 
+        abortButton = findViewById(R.id.button_abort_measurement)
+        abortButton.setOnClickListener {
+            measureState.tryEmit(MeasureState.ABORTED)
+        }
+
         redoButton = findViewById(R.id.button_redo_measurement)
         redoButton.setOnClickListener {
             measureState.tryEmit(MeasureState.IDLE)
@@ -108,10 +114,10 @@ class MeasureActivity : AppCompatActivity(), MeasureCallback, KoinComponent {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 measureState.collect { state ->
+                    updateButtonState(state)
                     when (state) {
                         MeasureState.NONE -> permissionHelper.requireCameraPermission()
                         MeasureState.IDLE -> launch {
-                            enableButtons(false)
                             cameraPreview.isVisible = true
                             startPreview()
                             showCountdown(5)
@@ -127,7 +133,10 @@ class MeasureActivity : AppCompatActivity(), MeasureCallback, KoinComponent {
                             cameraPreview.isVisible = false
                             stopCamera()
                             computeResults()
-                            enableButtons(true)
+                        }
+                        MeasureState.ABORTED -> launch {
+                            stopCamera()
+                            finish()
                         }
                     }
                 }
@@ -142,9 +151,11 @@ class MeasureActivity : AppCompatActivity(), MeasureCallback, KoinComponent {
         }
     }
 
-    private fun enableButtons(enabled: Boolean) {
-        redoButton.isEnabled = enabled
-        saveButton.isEnabled = enabled
+    private fun updateButtonState(state: MeasureState) {
+        abortButton.isVisible = state != MeasureState.FINISHED
+        abortButton.isEnabled = state != MeasureState.NONE
+        redoButton.isVisible = state == MeasureState.FINISHED
+        saveButton.isEnabled = state == MeasureState.FINISHED
     }
 
     private suspend fun getCameraProvider(): ProcessCameraProvider {

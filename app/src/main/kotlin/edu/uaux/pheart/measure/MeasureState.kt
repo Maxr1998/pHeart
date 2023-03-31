@@ -20,5 +20,10 @@ enum class MeasureState {
      * Measuring is done, the user can review save the measurement.
      */
     FINISHED,
+
+    /**
+     * The user has aborted the measurement.
+     */
+    ABORTED,
     ;
 }
