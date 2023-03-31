@@ -25,8 +25,11 @@ class MeasureResultsViewModel(app: Application) : AndroidViewModel(app), KoinCom
     private val _comparedToLast7Days = MutableLiveData<Int?>()
     val comparedToLast7Days: LiveData<Int?> = _comparedToLast7Days
 
-    private val _bpmGoodRange = MutableLiveData<IntRange>()
-    val bpmGoodRange: LiveData<IntRange> = _bpmGoodRange
+    private val _restingBpmGoodRange = MutableLiveData<IntRange>()
+    val restingBpmGoodRange: LiveData<IntRange> = _restingBpmGoodRange
+
+    private val _exercisingBpmGoodRange = MutableLiveData<IntRange>()
+    val exercisingBpmGoodRange: LiveData<IntRange> = _exercisingBpmGoodRange
 
     private var initialized = false
 
@@ -48,7 +51,9 @@ class MeasureResultsViewModel(app: Application) : AndroidViewModel(app), KoinCom
             PreferenceKeys.PREF_SEX_DEFAULT_VALUE
         ))
 
-        _bpmGoodRange.value = HeartRateInfo.getRestingHeartRate(age, sex)
+        _restingBpmGoodRange.value = HeartRateInfo.getRestingHeartRate(age, sex)
+        _exercisingBpmGoodRange.value = HeartRateInfo.getExerciseHeartRange(age, sex)
+
 
         initialized = true
     }
