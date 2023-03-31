@@ -128,6 +128,16 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/scroll_view_activity_level" />
 
+            <de.Maxr1998.modernpreferences.views.ModernSeekBar
+                android:id="@+id/measurement_duration_slider"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/measurement_duration_prompt"
+                app:layout_constraintWidth_max="@dimen/max_view_width" />
+
             <TextView
                 android:id="@+id/measurement_duration_prompt_subtitle"
                 style="?attr/textAppearanceCaption"
@@ -140,27 +150,18 @@
                 android:textStyle="italic"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/measurement_duration_prompt" />
-
-            <de.Maxr1998.modernpreferences.views.ModernSeekBar
-                android:id="@+id/measurement_duration_slider"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:layout_marginTop="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/measurement_duration_prompt_subtitle"
-                app:layout_constraintWidth_max="@dimen/max_view_width" />
+                app:layout_constraintTop_toBottomOf="@id/measurement_duration_slider" />
 
             <Button
                 android:id="@+id/button_start_measurement"
                 style="?attr/materialButtonOutlinedStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/screen_padding_vertical"
                 android:text="@string/button_start_measurement"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/measurement_duration_slider" />
+                app:layout_constraintTop_toBottomOf="@id/measurement_duration_prompt_subtitle" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
