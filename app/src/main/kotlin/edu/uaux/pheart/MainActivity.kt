@@ -37,7 +37,9 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
         navigationView = findViewById(R.id.bottom_navigation)
         navigationView.setOnItemSelectedListener(this)
 
-        replaceFragment<StatisticsFragment>()
+        if (savedInstanceState == null) {
+            replaceFragment<StatisticsFragment>()
+        }
     }
 
     private inline fun <reified T : Fragment> replaceFragment() {
