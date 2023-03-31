@@ -237,6 +237,7 @@ class MeasureActivity : AppCompatActivity(), MeasureCallback, KoinComponent {
                 putExtra(MeasureResultsActivity.EXTRA_MEASUREMENT, measurement)
                 startActivity(this)
             }
+            finish()
         }
     }
 
