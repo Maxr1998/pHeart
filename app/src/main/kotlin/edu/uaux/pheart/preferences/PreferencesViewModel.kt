@@ -44,7 +44,7 @@ class PreferencesViewModel(app: Application) : AndroidViewModel(app), KoinCompon
         }
 
         pref(PreferenceKeys.PREF_KEY_SEND_MANUAL_NOTIFICATION) {
-            titleRes = R.string.notification_send_debug_title
+            titleRes = R.string.notification_example_title
             onClick {
                 notificationService.sendMeasurementReminder()
                 false

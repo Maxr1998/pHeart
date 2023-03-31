@@ -52,7 +52,7 @@
     <string name="screen_name_statistics">Statistics</string>
 
     <!--  Preferences  -->
-    <string name="notification_send_debug_title">Send debug notification</string>
+    <string name="notification_example_title">Send example notification</string>
     <string name="notification_enable_title">Send reminders</string>
     <string name="notification_enable_desc">Get a reminder to measure your heart rate in regular intervals.</string>
     <string name="notification_reminder_interval_title">Reminder Interval</string>
