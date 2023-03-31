@@ -47,4 +47,10 @@
     <string name="compare_yesterday_average">compared to yesterday\'s average</string>
     <string name="compare_to_average_no_value">N/A</string>
     <string name="screen_name_statistics">Statistics</string>
+
+    <!--  Preferences  -->
+    <string name="notification_send_debug_title">Send debug notification</string>
+    <string name="notification_enable_title">Send reminders</string>
+    <string name="notification_enable_desc">Get a reminder to measure your heart rate in regular intervals.</string>
+    <string name="notification_reminder_interval_title">Reminder Interval</string>
 </resources>

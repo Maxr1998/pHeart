@@ -1,20 +1,24 @@
 package edu.uaux.pheart.preferences
 
 import android.app.Application
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import de.Maxr1998.modernpreferences.PreferencesAdapter
+import de.Maxr1998.modernpreferences.helpers.onClick
+import de.Maxr1998.modernpreferences.helpers.pref
 import de.Maxr1998.modernpreferences.helpers.screen
 import de.Maxr1998.modernpreferences.helpers.singleChoice
 import de.Maxr1998.modernpreferences.helpers.switch
 import de.Maxr1998.modernpreferences.preferences.choice.SelectionItem
+import edu.uaux.pheart.R
 
 class PreferencesViewModel(app: Application) : AndroidViewModel(app) {
     private val preferenceScreen = screen(getApplication()) {
         collapseIcon = true
 
         switch(PreferenceKeys.PREF_KEY_ENABLE_REMINDERS) {
-            title = "Send reminders"
-            summary = "Get a reminder to measure your heart rate in regular intervals."
+            titleRes = R.string.notification_enable_title
+            summaryRes = R.string.notification_enable_desc
         }
 
         singleChoice(
@@ -30,9 +34,18 @@ class PreferencesViewModel(app: Application) : AndroidViewModel(app) {
                 SelectionItem("1d", title = "24 hours"),
             ),
         ) {
-            title = "Reminder Interval"
+            titleRes = R.string.notification_reminder_interval_title
             initialSelection = "30m"
             dependency = PreferenceKeys.PREF_KEY_ENABLE_REMINDERS
+        }
+
+        pref(PreferenceKeys.PREF_KEY_SEND_MANUAL_NOTIFICATION) {
+            titleRes = R.string.notification_send_debug_title
+            onClick {
+                Toast.makeText(this@PreferencesViewModel.getApplication(), "Notification sent", Toast.LENGTH_SHORT)
+                    .show()
+                false
+            }
         }
     }
     val preferencesAdapter = PreferencesAdapter(preferenceScreen)
