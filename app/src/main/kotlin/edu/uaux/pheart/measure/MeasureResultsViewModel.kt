@@ -6,14 +6,14 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import edu.uaux.pheart.database.Measurement
-import edu.uaux.pheart.util.ext.toast
 import edu.uaux.pheart.database.MeasurementDao
+import edu.uaux.pheart.database.get
 import edu.uaux.pheart.preferences.PreferenceKeys
 import edu.uaux.pheart.profile.BiologicalSex
 import edu.uaux.pheart.profile.HeartRateInfo
-import edu.uaux.pheart.statistics.StatisticsUtils
-import edu.uaux.pheart.statistics.get
+import edu.uaux.pheart.statistics.units.TimeUnitUtil
 import edu.uaux.pheart.util.ext.avgOfOrNull
+import edu.uaux.pheart.util.ext.toast
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.time.ZonedDateTime
@@ -42,28 +42,28 @@ class MeasureResultsViewModel(app: Application) : AndroidViewModel(app), KoinCom
             return
         }
 
-        _comparedToYesterday.value = getYesterdayAverage()?.let{ avg -> measurement.bpm - avg}
-        _comparedToLast7Days.value = getLast7DaysAverage()?.let{ avg -> measurement.bpm - avg}
+        _comparedToYesterday.value = getYesterdayAverage()?.let { avg -> measurement.bpm - avg }
+        _comparedToLast7Days.value = getLast7DaysAverage()?.let { avg -> measurement.bpm - avg }
 
         val age = sharedPreferences.getInt(PreferenceKeys.PREF_KEY_AGE, 30)
-        val sex = BiologicalSex.fromId(sharedPreferences.getInt(
-            PreferenceKeys.PREF_KEY_SEX,
-            PreferenceKeys.PREF_SEX_DEFAULT_VALUE
-        ))
+        val sex = BiologicalSex.fromId(
+            sharedPreferences.getInt(
+                PreferenceKeys.PREF_KEY_SEX,
+                PreferenceKeys.PREF_SEX_DEFAULT_VALUE,
+            ),
+        )
 
         _restingBpmGoodRange.value = HeartRateInfo.getRestingHeartRate(age, sex)
         _exercisingBpmGoodRange.value = HeartRateInfo.getExerciseHeartRange(age, sex)
-
 
         initialized = true
     }
 
     private suspend fun getYesterdayAverage(): Int? =
-        measurementDao.get(StatisticsUtils.createDayRange(ZonedDateTime.now().minusDays(1)))
+        measurementDao.get(TimeUnitUtil.createDayRange(ZonedDateTime.now().minusDays(1)))
             .avgOfOrNull { measurement -> measurement.bpm }
 
     private suspend fun getLast7DaysAverage(): Int? =
-        measurementDao.get(StatisticsUtils.createLast7DaysRange(ZonedDateTime.now()))
+        measurementDao.get(TimeUnitUtil.createLast7DaysRange(ZonedDateTime.now()))
             .avgOfOrNull { measurement -> measurement.bpm }
-
 }

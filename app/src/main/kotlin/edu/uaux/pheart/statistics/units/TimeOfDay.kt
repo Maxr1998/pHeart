@@ -1,4 +1,4 @@
-package edu.uaux.pheart.statistics
+package edu.uaux.pheart.statistics.units
 
 import java.util.Locale
 

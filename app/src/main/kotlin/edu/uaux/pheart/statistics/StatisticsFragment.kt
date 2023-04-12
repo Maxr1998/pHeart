@@ -17,6 +17,8 @@ import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.google.android.material.button.MaterialButtonToggleGroup
 import edu.uaux.pheart.R
+import edu.uaux.pheart.statistics.units.TimeOfDay
+import edu.uaux.pheart.statistics.units.startOfDay
 import edu.uaux.pheart.util.ext.avgOf
 import edu.uaux.pheart.util.ext.resolveThemeColor
 import edu.uaux.pheart.util.ext.toast
@@ -25,6 +27,9 @@ import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
+/**
+ * Statistics screen.
+ */
 class StatisticsFragment : Fragment() {
 
     private val viewModel: StatisticsViewModel by viewModels()
@@ -76,7 +81,7 @@ class StatisticsFragment : Fragment() {
             timeTextView.text = selected.timeOfDay.toFormattedString(includeSeconds = false)
         }
 
-        viewModel.dayInstant.observe(this) { day ->
+        viewModel.selectedDay.observe(this) { day ->
             if (day == null) {
                 dateTextView.setText(R.string.no_value_indicator)
                 nextDayButton.isEnabled = false
@@ -147,6 +152,9 @@ class StatisticsFragment : Fragment() {
         updateChartData()
     }
 
+    /**
+     * Creates the chart and sets it's basic style.
+     */
     private fun styleChart() {
         val textColor = requireContext().resolveThemeColor(R.attr.colorOnSurface)
 
@@ -170,6 +178,9 @@ class StatisticsFragment : Fragment() {
         barChart.axisRight.textColor = textColor
     }
 
+    /**
+     * Updates the chart to show the values in [StatisticsViewModel.dailyMeasurements].
+     */
     private fun updateChartData() {
         // aggregate the daily data over the course of the 24h in a day
         val hourlyAverageBpm = buildList {
@@ -191,7 +202,7 @@ class StatisticsFragment : Fragment() {
             )
         }
 
-        val dataset = BarDataSet(entries, "bpm")
+        val dataset = BarDataSet(entries, requireContext().getString(R.string.bpm_unit_no_caps))
         styleDataset(dataset)
 
         val barData = BarData(dataset)

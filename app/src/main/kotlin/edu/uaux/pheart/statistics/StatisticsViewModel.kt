@@ -11,6 +11,9 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import edu.uaux.pheart.database.AppDatabase
 import edu.uaux.pheart.database.Measurement
 import edu.uaux.pheart.database.MeasurementDao
+import edu.uaux.pheart.database.get
+import edu.uaux.pheart.statistics.units.TimeOfDay
+import edu.uaux.pheart.statistics.units.TimeUnitUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -25,7 +28,7 @@ class StatisticsViewModel(app: Application) : AndroidViewModel(app), KoinCompone
 
     private val _selectedMeasurement: MutableLiveData<AverageBpm?> = MutableLiveData<AverageBpm?>(null)
     private val _dailyMeasurements: MutableLiveData<List<Measurement>> = MutableLiveData(emptyList())
-    private val _dayInstant: MutableLiveData<ZonedDateTime?> = MutableLiveData(null)
+    private val _selectedDay: MutableLiveData<ZonedDateTime?> = MutableLiveData(null)
 
     private val _statisticsMode: MutableLiveData<StatisticsFragmentMode> = MutableLiveData(StatisticsFragmentMode.DAILY)
 
@@ -33,8 +36,8 @@ class StatisticsViewModel(app: Application) : AndroidViewModel(app), KoinCompone
         get() = _selectedMeasurement
     val dailyMeasurements: LiveData<List<Measurement>>
         get() = _dailyMeasurements
-    val dayInstant: LiveData<ZonedDateTime?>
-        get() = _dayInstant
+    val selectedDay: LiveData<ZonedDateTime?>
+        get() = _selectedDay
     val statisticsMode: LiveData<StatisticsFragmentMode>
         get() = _statisticsMode
 
@@ -43,13 +46,13 @@ class StatisticsViewModel(app: Application) : AndroidViewModel(app), KoinCompone
     }
 
     private fun loadDay(zonedDateTime: ZonedDateTime) {
-        val range = StatisticsUtils.createDayRange(zonedDateTime)
+        val range = TimeUnitUtil.createDayRange(zonedDateTime)
         this.viewModelScope.launch {
             val dailyMeasurements = withContext(Dispatchers.IO) {
                 measurementDao.get(range)
             }
             _dailyMeasurements.value = dailyMeasurements
-            _dayInstant.value = zonedDateTime
+            _selectedDay.value = zonedDateTime
             _selectedMeasurement.value = null
         }
     }
@@ -83,13 +86,13 @@ class StatisticsViewModel(app: Application) : AndroidViewModel(app), KoinCompone
     }
 
     fun toNextDay() {
-        _dayInstant.value?.let {
+        _selectedDay.value?.let {
             loadDay(it.plusDays(1))
         }
     }
 
     fun toPreviousDay() {
-        _dayInstant.value?.let {
+        _selectedDay.value?.let {
             loadDay(it.minusDays(1))
         }
     }

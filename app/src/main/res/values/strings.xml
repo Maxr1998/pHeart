@@ -10,7 +10,7 @@
     <string name="screen_name_profile">Profile</string>
     <string name="screen_name_preferences">Preferences</string>
 
-<!--  All measurements screen  -->
+    <!--  All measurements screen  -->
     <string name="bpm_suffix">%s bpm</string>
 
     <!--  Add measurement screen  -->
@@ -71,4 +71,5 @@
     <string name="bpm_range_template">%d–%d</string>
     <string name="no_value_indicator">––</string>
     <string name="bpm_unit">BPM</string>
+    <string name="bpm_unit_no_caps">bpm</string>
 </resources>
