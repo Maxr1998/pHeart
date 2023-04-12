@@ -7,6 +7,9 @@ import kotlin.math.roundToInt
  * Used for querying the different recommended heart rate ranges.
  */
 object HeartRateInfo {
+    /**
+     * @return the recommended resting heart rate range for a given age and sex
+     */
     fun getRestingHeartRate(age: Int, biologicalSex: BiologicalSex): IntRange {
         require(age in 0..Int.MAX_VALUE)
         val map = when (biologicalSex) {
@@ -23,22 +26,29 @@ object HeartRateInfo {
         }
     }
 
+    /**
+     * @return the approximate maximum heart rate for a given age and sex
+     */
     fun getMaxHeartRate(age: Int, biologicalSex: BiologicalSex): Int {
         require(age in 0..Int.MAX_VALUE)
         return 220 - min(age, 150) + when (biologicalSex) {
-            BiologicalSex.NONE -> 0
-            BiologicalSex.MALE -> 0
+            BiologicalSex.NONE,
+            BiologicalSex.MALE,
+            -> 0
             BiologicalSex.FEMALE -> 7 // female heart rate higher by 7 on average
         }
     }
 
+    /**
+     * @return the recommended exercise heart rate range for a given age and sex
+     */
     fun getExerciseHeartRange(age: Int, biologicalSex: BiologicalSex): IntRange {
         require(age in 0..Int.MAX_VALUE)
         val maxHr = getMaxHeartRate(age, biologicalSex)
         return (maxHr * 0.64).roundToInt()..(maxHr * 0.76).roundToInt() // recommended heart range 64-76% of max range
     }
 
-    private val ageGroups: List<IntRange> = listOf<IntRange>(
+    private val ageGroups: List<IntRange> = listOf(
         0..17,
         18..25,
         26..35,

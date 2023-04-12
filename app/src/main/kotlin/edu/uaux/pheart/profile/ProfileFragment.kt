@@ -23,6 +23,9 @@ import edu.uaux.pheart.preferences.PreferenceKeys.PREF_SEX_DEFAULT_VALUE
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 
+/**
+ * User profile screen.
+ */
 class ProfileFragment : Fragment(), KoinComponent {
 
     private val sharedPreferences: SharedPreferences = get()
@@ -37,7 +40,6 @@ class ProfileFragment : Fragment(), KoinComponent {
     private var age = 0                         // overridden
     private var sex = BiologicalSex.NONE        // overridden
 
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_profile, container, false)
     }
@@ -45,6 +47,7 @@ class ProfileFragment : Fragment(), KoinComponent {
     override fun onResume() {
         super.onResume()
 
+        // re-init dropdown items
         val sexDropdownOptions = listOf(
             DropDownItem(requireContext(), BiologicalSex.MALE),
             DropDownItem(requireContext(), BiologicalSex.FEMALE),
@@ -70,6 +73,9 @@ class ProfileFragment : Fragment(), KoinComponent {
         registerInputListeners()
     }
 
+    /**
+     * Registers listeners for the input fields. React so changes by persisting values and update dependent views.
+     */
     private fun registerInputListeners() {
         ageEditText.doOnTextChanged { text, _, _, _ ->
             age = if (text.isNullOrBlank()) PREF_AGE_DEFAULT_VALUE else text.toString().toInt()
@@ -85,12 +91,15 @@ class ProfileFragment : Fragment(), KoinComponent {
         }
     }
 
+    /**
+     * Initialises the input fields with the values from the preferences.
+     */
     private fun initialiseInputs() {
         ageEditText.setText(if (age == -1) "" else age.toString())
         biologicalSexText.setText(
             when (sex) {
                 BiologicalSex.MALE -> requireContext().getString(R.string.option_male)
-                BiologicalSex.FEMALE -> requireContext().getString(R.string.option_male)
+                BiologicalSex.FEMALE -> requireContext().getString(R.string.option_female)
                 else -> ""
             },
         )
@@ -121,6 +130,9 @@ class ProfileFragment : Fragment(), KoinComponent {
         )
     }
 
+    /**
+     * Wrapper for drop down menu items.
+     */
     private data class DropDownItem(private val context: Context, val sex: BiologicalSex) {
         init {
             require(sex != BiologicalSex.NONE)
