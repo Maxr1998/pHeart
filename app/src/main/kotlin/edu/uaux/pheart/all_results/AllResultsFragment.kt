@@ -9,6 +9,9 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import edu.uaux.pheart.R
 
+/**
+ * Fragment that displays all the measurements.
+ */
 class AllResultsFragment : Fragment() {
 
     private val viewModel: AllResultsViewModel by viewModels()

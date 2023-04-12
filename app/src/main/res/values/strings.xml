@@ -2,12 +2,18 @@
 <resources>
     <string name="app_name">pHeart</string>
 
+    <!--  Screen names  -->
+    <string name="screen_name_statistics">Statistics</string>
     <string name="screen_name_home">Home</string>
     <string name="screen_name_all_measurements">All measurements</string>
     <string name="screen_name_add_measurement">Add measurement</string>
     <string name="screen_name_profile">Profile</string>
     <string name="screen_name_preferences">Preferences</string>
 
+<!--  All measurements screen  -->
+    <string name="bpm_suffix">%s bpm</string>
+
+    <!--  Add measurement screen  -->
     <string name="title_new_measurement">New measurement</string>
     <string name="button_measurement_type_face">face</string>
     <string name="button_measurement_type_finger">finger</string>
@@ -19,6 +25,8 @@
     <string name="measurement_duration_prompt">How long do you want to measure?</string>
     <string name="measurement_duration_prompt_subtitle">Longer measurements are more precise.</string>
     <string name="button_start_measurement">Start</string>
+
+    <!--  Taking measurement screen  -->
     <string name="measurement_state_get_ready">Get ready</string>
     <string name="measurement_state_measuring">Measuring</string>
     <string name="measurement_state_complete">Complete</string>
@@ -26,15 +34,19 @@
     <string name="button_redo_measurement">Redo</string>
     <string name="button_save_measurement">Save</string>
     <string name="toast_warning_measurement_cancelled">Measurement was cancelled, please keep the screen open while measuring.</string>
-    <string name="statistics_btn_day_">day</string>
+
+    <!--  Evaluate screen  -->
+    <string name="compare_last_week_average">compared to last 7 days</string>
+    <string name="compare_yesterday_average">compared to yesterday\'s average</string>
+    <string name="compare_to_average_no_value">N/A</string>
+
+    <!--  Statistics screen  -->
+    <string name="statistics_btn_day">day</string>
     <string name="statistics_btn_week">week</string>
     <string name="statistics_header_daily">Daily statistics</string>
     <string name="statistics_average">Average</string>
     <string name="statistics_minimum">Minimum</string>
     <string name="statistics_maximum">Maximum</string>
-    <string name="bpm_range_template">%d–%d</string>
-    <string name="bpm">BPM</string>
-    <string name="no_value_indicator">––</string>
 
     <!--  Profile  -->
     <string name="profile_age">Age</string>
@@ -45,11 +57,6 @@
     <string name="profile_resting_heart_rate_info_text">When you are not engaged in any physical activity or stress your heart rate should be around this level, although it can vary depending on factors such as age, fitness level, and overall health. A lower resting heart rate is generally considered a sign of good cardiovascular health and fitness.</string>
     <string name="profile_exercise_heart_rate_title">Exercise heart rate</string>
     <string name="profile_exercise_heart_rate_info_text">Exercising within this range can improve your cardiovascular fitness, lower your risk of heart disease, and improve overall health. However, it is important to consult with a healthcare professional before starting any exercise program to ensure it is safe and appropriate for you.</string>
-    <string name="bpm_unit">BPM</string>
-    <string name="compare_last_week_average">compared to last 7 days</string>
-    <string name="compare_yesterday_average">compared to yesterday\'s average</string>
-    <string name="compare_to_average_no_value">N/A</string>
-    <string name="screen_name_statistics">Statistics</string>
 
     <!--  Preferences  -->
     <string name="notification_example_title">Send example notification</string>
@@ -59,4 +66,9 @@
 
     <!--  Notifications  -->
     <string name="notification_debug_title">Time for a measurement!</string>
+
+    <!--  Others  -->
+    <string name="bpm_range_template">%d–%d</string>
+    <string name="no_value_indicator">––</string>
+    <string name="bpm_unit">BPM</string>
 </resources>

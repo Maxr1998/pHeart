@@ -6,8 +6,14 @@ import java.time.ZoneId
 import java.time.ZonedDateTime
 import kotlin.random.Random
 
+/**
+ * Used for testing / demo purposes.
+ */
 object MeasurementDummyRepository {
 
+    /**
+     * Generates a list of random measurements.
+     */
     fun generateMeasurements(number: Int = 50): List<Measurement> {
         val startTime = ZonedDateTime.now(ZoneId.systemDefault())
 
@@ -31,6 +37,10 @@ object MeasurementDummyRepository {
         else -> ActivityLevel.RELAXING
     }
 
+    /**
+     * Returns a time which is offset by a random number of minutes, but guaranteed to be in [this] - minutes
+     * and [this] + minutes.
+     */
     private fun ZonedDateTime.scattered(minutes: Int): ZonedDateTime {
         return plusMinutes((Random.nextFloat() * (minutes * 2) - minutes).toLong())
     }

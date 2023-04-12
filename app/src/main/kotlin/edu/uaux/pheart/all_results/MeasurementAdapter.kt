@@ -12,7 +12,10 @@ import edu.uaux.pheart.database.Measurement
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
-class MeasurementAdapter() : Adapter<MeasurementAdapter.MeasurementViewHolder>() {
+/**
+ * Adapter for the RecyclerView in [AllResultsFragment].
+ */
+class MeasurementAdapter : Adapter<MeasurementAdapter.MeasurementViewHolder>() {
 
     var measurements = listOf<Measurement>()
         @SuppressLint("NotifyDataSetChanged")
@@ -38,7 +41,8 @@ class MeasurementAdapter() : Adapter<MeasurementAdapter.MeasurementViewHolder>()
     override fun onBindViewHolder(holder: MeasurementViewHolder, position: Int) {
         val measurement = measurements[position]
 
-        holder.bpmText.text = measurement.bpm.toString() + " bpm"
+        val context = holder.itemView.context
+        holder.bpmText.text = context.getString(R.string.bpm_suffix, measurement.bpm.toString())
         holder.datetimeText.text = measurement.timestamp.format(dateFormatter)
     }
 }
