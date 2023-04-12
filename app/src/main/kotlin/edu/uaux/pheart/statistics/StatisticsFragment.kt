@@ -17,7 +17,7 @@ import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.google.android.material.button.MaterialButtonToggleGroup
 import edu.uaux.pheart.R
-import edu.uaux.pheart.util.avgOf
+import edu.uaux.pheart.util.ext.avgOf
 import edu.uaux.pheart.util.ext.resolveThemeColor
 import edu.uaux.pheart.util.ext.toast
 import java.time.ZoneId

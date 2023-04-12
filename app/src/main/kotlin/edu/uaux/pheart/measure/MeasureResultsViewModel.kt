@@ -13,7 +13,7 @@ import edu.uaux.pheart.profile.BiologicalSex
 import edu.uaux.pheart.profile.HeartRateInfo
 import edu.uaux.pheart.statistics.StatisticsUtils
 import edu.uaux.pheart.statistics.get
-import edu.uaux.pheart.util.avgOfOrNull
+import edu.uaux.pheart.util.ext.avgOfOrNull
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.time.ZonedDateTime

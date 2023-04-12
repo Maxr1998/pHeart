@@ -16,6 +16,9 @@ import androidx.core.app.NotificationManagerCompat
 import edu.uaux.pheart.MainActivity
 import edu.uaux.pheart.R
 
+/**
+ * Streamlines sending notifications.
+ */
 class NotificationService(
     private val context: Context,
 ) {
