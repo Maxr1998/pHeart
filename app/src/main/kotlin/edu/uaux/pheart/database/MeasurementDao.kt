@@ -7,6 +7,9 @@ import androidx.room.Insert
 import androidx.room.Query
 import java.time.ZonedDateTime
 
+/**
+ * Contains all database queries for the [Measurement] entity.
+ */
 @Dao
 interface MeasurementDao {
 

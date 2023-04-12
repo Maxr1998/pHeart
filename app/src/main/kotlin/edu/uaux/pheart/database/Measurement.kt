@@ -7,6 +7,9 @@ import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
 import java.time.ZonedDateTime
 
+/**
+ * Represents a measurement of the user's heart rate.
+ */
 @Parcelize
 @Entity(tableName = "measurement")
 data class Measurement(
