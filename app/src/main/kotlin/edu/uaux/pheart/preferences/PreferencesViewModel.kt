@@ -14,6 +14,9 @@ import edu.uaux.pheart.util.NotificationService
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
+/**
+ * The ViewModel for [PreferencesFragment]. Populates the settings / preferences.
+ */
 class PreferencesViewModel(app: Application) : AndroidViewModel(app), KoinComponent {
 
     private val notificationService: NotificationService by inject()
@@ -28,7 +31,7 @@ class PreferencesViewModel(app: Application) : AndroidViewModel(app), KoinCompon
         singleChoice(
             PreferenceKeys.PREF_KEY_INTERVAL_REMINDER,
             items = listOf(
-                SelectionItem("30s", title = "30 seconds"),
+                SelectionItem("30s", title = "30 seconds"), // demo purpose
                 SelectionItem("30m", title = "30 minutes"),
                 SelectionItem("1h", title = "1 hour"),
                 SelectionItem("2h", title = "2 hours"),
@@ -43,6 +46,7 @@ class PreferencesViewModel(app: Application) : AndroidViewModel(app), KoinCompon
             dependency = PreferenceKeys.PREF_KEY_ENABLE_REMINDERS
         }
 
+        // demo purpose
         pref(PreferenceKeys.PREF_KEY_SEND_MANUAL_NOTIFICATION) {
             titleRes = R.string.notification_example_title
             onClick {

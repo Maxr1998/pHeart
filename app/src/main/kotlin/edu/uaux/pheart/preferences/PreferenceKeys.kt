@@ -2,6 +2,9 @@ package edu.uaux.pheart.preferences
 
 import edu.uaux.pheart.profile.BiologicalSex
 
+/**
+ * Keys and default values for SharedPreferences and ModernPreferences.
+ */
 object PreferenceKeys {
     const val PREF_KEY_INTERVAL_REMINDER = "interval_reminder"
     const val PREF_KEY_ENABLE_REMINDERS = "enable_reminders"

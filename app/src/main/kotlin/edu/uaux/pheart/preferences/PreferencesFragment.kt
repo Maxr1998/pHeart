@@ -9,6 +9,9 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import edu.uaux.pheart.R
 
+/**
+ * Settings / preferences screen.
+ */
 class PreferencesFragment : Fragment() {
 
     private val preferencesViewModel: PreferencesViewModel by viewModels()
